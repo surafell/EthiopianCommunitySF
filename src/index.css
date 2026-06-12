@@ -1,0 +1,53 @@
+:root {
+  --cream: #fff8e1;
+  --gold: #fdd835;
+  --green: #1f6f34;
+  --green-dark: #123d22;
+  --red: #d8212a;
+  --rust: #b9653a;
+  --ink: #1f2933;
+  --ink-muted: #5d6875;
+  --display-font: Georgia, 'Times New Roman', serif;
+  --body-font:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+
+  color: var(--ink);
+  background: var(--cream);
+  font-family: var(--body-font);
+  font-synthesis: none;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+::selection {
+  color: var(--green-dark);
+  background: var(--gold);
+}
