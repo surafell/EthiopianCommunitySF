@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 import logo from './assets/logo.png'
 
-const STORAGE_KEY = 'ecba-site-content-v1'
-const SESSION_KEY = 'ecba-admin-session-v1'
+const STORAGE_KEY = 'ecsf-site-content-v1'
+const SESSION_KEY = 'ecsf-admin-session-v1'
 
 const emptyPost = {
   title: '',
