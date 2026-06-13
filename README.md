@@ -1,8 +1,8 @@
 # ethiopiancommunitysf.org
 
-Website for Ethiopian Community Bay Area.
+Website for Ethiopian Community San Francisco.
 
-Modern React frontend for a Bay Area Ethiopian community website. The current site is a polished static frontend with CMS-ready content sections for mission, about/history, events, membership, programs, donation, and contact.
+Modern React frontend for a San Francisco Ethiopian community website. The current site is a polished static frontend with CMS-ready content sections for mission, about/history, events, membership, programs, donation, and contact.
 
 ## Local Admin Dashboard
 

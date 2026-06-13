@@ -115,6 +115,15 @@
   text-transform: uppercase;
 }
 
+.brand-logo {
+  width: 3.2rem;
+  height: 3.2rem;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
 .brand-mark {
   position: relative;
   display: grid;
@@ -1037,7 +1046,8 @@
     position: static;
   }
 
-  .brand-mark {
+  .brand-mark,
+  .brand-logo {
     width: 2.8rem;
     height: 2.8rem;
   }

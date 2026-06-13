@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
+import logo from './assets/logo.png'
 
 const STORAGE_KEY = 'ecba-site-content-v1'
 const SESSION_KEY = 'ecba-admin-session-v1'
@@ -36,17 +37,17 @@ const defaultContent = {
   theme: 'heritage',
   template: 'classic',
   siteName: 'Ethiopian Community',
-  region: 'Bay Area',
+  region: 'San Francisco',
   heroEyebrow: 'Inclusive. Nonpolitical. Nonreligious.',
-  heroTitle: 'Building a connected Ethiopian community across the Bay Area.',
+  heroTitle: 'Building a connected Ethiopian community across San Francisco.',
   heroText:
-    'Ethiopian Community Bay Area, ECBA, supports the social, economic, educational, and cultural needs of Ethiopian immigrants and neighbors across Northern California.',
+    'Ethiopian Community San Francisco, ECSF, supports the social, economic, educational, and cultural needs of Ethiopian immigrants and neighbors across Northern California.',
   heroCardTitle: 'Culture, service, and belonging',
   heroCardText:
     'A modern civic home for families, elders, students, professionals, volunteers, and friends of the Ethiopian community.',
   missionTitle: 'Rooted in service, culture, and community care.',
   missionText:
-    'The Ethiopian Community Bay Area, ECBA, is an inclusive, nonpolitical, and nonreligious civic organization aiming to address the social, economic, and educational needs of Ethiopian immigrants, and others in similar situations, residing in the Greater Bay Area of Northern California. ECBA is committed to promote the history and the cultural heritage of Ethiopia at large.',
+    'The Ethiopian Community San Francisco, ECSF, is an inclusive, nonpolitical, and nonreligious civic organization aiming to address the social, economic, and educational needs of Ethiopian immigrants, and others in similar situations, residing in the Greater San Francisco area of Northern California. ECSF is committed to promote the history and the cultural heritage of Ethiopia at large.',
   aboutTitle: 'Our values guide every program we build.',
   values: [
     'We promote inclusiveness, so members feel safe, respected, and comfortable in expressing all aspects of their identities.',
@@ -60,17 +61,17 @@ const defaultContent = {
   ],
   historyTitle: 'From community conversations to long-term impact.',
   historyText:
-    'The Ethiopian Community Bay Area was established after a year of meetings and conversations between like-minded individuals on how to tackle social problems arising in the Ethiopian immigrant community.\n\nAmid the Covid-19 pandemic, ECBA converted to a virtual nonprofit. Medical teams assembled bilingual public panels to educate the community, and subcommittees began delivering services based on the mission of educational, economic, and social support.\n\nOur future is full of hope as supporters take part in programs and services. Volunteers and board members continue to assess needs, strengthen partnerships, raise funds, and expand high-impact services across the Bay Area.\n\nECBA is run by subcommittees, each addressing a different need. Our long-term goals include a health fair, website learning resources, weekly Amharic lessons, a STEM lab, youth mentoring, job fairs, college counseling, mental health counseling, elderly engagement, and pro bono services through our legal team.\n\nA key part of our strategy is to look ahead toward healthy and strategic growth. As you read about our plans, we hope you will imagine yourself as a future ECBA partner and be part of our theory of change.',
+    'The Ethiopian Community San Francisco was established after a year of meetings and conversations between like-minded individuals on how to tackle social problems arising in the Ethiopian immigrant community.\n\nAmid the Covid-19 pandemic, ECSF converted to a virtual nonprofit. Medical teams assembled bilingual public panels to educate the community, and subcommittees began delivering services based on the mission of educational, economic, and social support.\n\nOur future is full of hope as supporters take part in programs and services. Volunteers and board members continue to assess needs, strengthen partnerships, raise funds, and expand high-impact services across San Francisco.\n\nECSF is run by subcommittees, each addressing a different need. Our long-term goals include a health fair, website learning resources, weekly Amharic lessons, a STEM lab, youth mentoring, job fairs, college counseling, mental health counseling, elderly engagement, and pro bono services through our legal team.\n\nA key part of our strategy is to look ahead toward healthy and strategic growth. As you read about our plans, we hope you will imagine yourself as a future ECSF partner and be part of our theory of change.',
   eventsIntro: 'Upcoming programs and gatherings.',
   posts: [
     {
-      title: 'Bay Area Ethiopian Culture Day',
+      title: 'San Francisco Ethiopian Culture Day',
       date: 'Spring 2026',
       category: 'Community',
       excerpt: 'A family-friendly celebration of Ethiopian music, food, history, and art.',
       mediaId: '',
       status: 'published',
-      publishedTitle: 'Bay Area Ethiopian Culture Day',
+      publishedTitle: 'San Francisco Ethiopian Culture Day',
       publishedDate: 'Spring 2026',
       publishedCategory: 'Community',
       publishedExcerpt: 'A family-friendly celebration of Ethiopian music, food, history, and art.',
@@ -146,7 +147,7 @@ const defaultContent = {
   siteUrl: 'https://ethiopiancommunitysf.org',
   contactEmail: 'info@ethiopiancommunitysf.org',
   contactPhone: '(415) 555-0123',
-  contactLocation: 'San Francisco Bay Area, California',
+  contactLocation: 'San Francisco, California',
   heroMediaId: '',
   media: [],
 }
@@ -302,10 +303,7 @@ function SiteHeader({ content, isAdmin, onLogout }) {
   return (
     <header className="site-header">
       <a className="brand" href="#home" aria-label={`${content.siteName} ${content.region} home`}>
-        <span className="brand-mark" aria-hidden="true">
-          <span className="hut-roof" />
-          <span className="hut-body" />
-        </span>
+        <img className="brand-logo" src={logo} alt={`${content.siteName} ${content.region} logo`} />
         <span>
           <strong>{content.siteName}</strong>
           <small>{content.region}</small>
@@ -419,7 +417,7 @@ function PublicSite({ content, historyParagraphs, onThemeChange }) {
               {historyParagraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
-              <strong>Team ECBA</strong>
+              <strong>Team ECSF</strong>
             </div>
           </div>
         </section>
@@ -488,7 +486,7 @@ function PublicSite({ content, historyParagraphs, onThemeChange }) {
 
         <section className="donation-section" id="donate">
           <div>
-            <p className="section-kicker">Donate to ECBA</p>
+            <p className="section-kicker">Donate to ECSF</p>
             <h2>{content.donationTitle}</h2>
             <p>{content.donationText}</p>
           </div>
@@ -525,7 +523,7 @@ function PublicSite({ content, historyParagraphs, onThemeChange }) {
       <footer className="site-footer">
         <div>
           <h2>{content.siteName} {content.region}</h2>
-          <p>Serving families, elders, youth, and volunteers across the Greater Bay Area.</p>
+          <p>Serving families, elders, youth, and volunteers across the Greater San Francisco area.</p>
         </div>
         <address>
           <strong>Contact Us</strong>
