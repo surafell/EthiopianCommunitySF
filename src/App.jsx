@@ -9,12 +9,15 @@ const emptyPost = {
   title: '',
   date: '',
   category: '',
+  noticeType: 'community',
   excerpt: '',
   mediaId: '',
   status: 'draft',
+  boardApproved: false,
   publishedTitle: '',
   publishedDate: '',
   publishedCategory: '',
+  publishedNoticeType: 'community',
   publishedExcerpt: '',
   publishedMediaId: '',
   publishedAt: '',
@@ -22,6 +25,11 @@ const emptyPost = {
 
 const emptyProgram = {
   title: '',
+  description: '',
+}
+
+const emptyEntry = {
+  name: '',
   description: '',
 }
 
@@ -38,17 +46,55 @@ const defaultContent = {
   template: 'classic',
   siteName: 'Ethiopian Community',
   region: 'San Francisco',
-  heroEyebrow: 'Inclusive. Nonpolitical. Nonreligious.',
-  heroTitle: 'Building a connected Ethiopian community across San Francisco.',
+  heroEyebrow: 'Inclusive · Non-Political · Non-Religious',
+  heroTitle: 'A united home for the Ethiopian community of the Bay Area.',
   heroText:
-    'Ethiopian Community San Francisco, ECSF, supports the social, economic, educational, and cultural needs of Ethiopian immigrants and neighbors across Northern California.',
-  heroCardTitle: 'Culture, service, and belonging',
+    'Ethiopian Community San Francisco (ECSF) is an inclusive, non-political, and non-religious organization serving Ethiopians and Ethiopian-Americans across San Francisco and the greater Bay Area. We bring people together around unity, culture, youth, elders, newcomers, and shared community representation.',
+  heroCardTitle: 'Unity, culture, and belonging',
   heroCardText:
-    'A modern civic home for families, elders, students, professionals, volunteers, and friends of the Ethiopian community.',
-  missionTitle: 'Rooted in service, culture, and community care.',
+    'A welcoming civic home for families, elders, youth, students, professionals, newcomers, volunteers, and friends of the Ethiopian community.',
+  heroFocusPoints: [
+    'Unity',
+    'Culture',
+    'Youth',
+    'Elders',
+    'Newcomers',
+    'Community Representation',
+  ],
+  missionTitle: 'Our Mission',
   missionText:
-    'The Ethiopian Community San Francisco, ECSF, is an inclusive, nonpolitical, and nonreligious civic organization aiming to address the social, economic, and educational needs of Ethiopian immigrants, and others in similar situations, residing in the Greater San Francisco area of Northern California. ECSF is committed to promote the history and the cultural heritage of Ethiopia at large.',
-  aboutTitle: 'Our values guide every program we build.',
+    'The Ethiopian Community San Francisco (ECSF) is an inclusive, non-political, and non-religious organization aiming to address the social, economic, educational, and cultural needs of Ethiopian and Ethiopian-American community members residing in San Francisco and the greater Bay Area. ECSF is committed to promoting the history and cultural heritage of Ethiopia.',
+  visionTitle: 'Our Vision',
+  visionText:
+    'A united, thriving, and well-represented Ethiopian community in the Bay Area, where every generation is supported, our culture and heritage are preserved, and members work together with transparency and mutual respect.',
+  coreValuesTitle: 'Our Core Values',
+  coreValues: [
+    {
+      name: 'Unity',
+      description: 'We bring the community together across generations and backgrounds with a shared sense of belonging.',
+    },
+    {
+      name: 'Respect',
+      description: 'We honor the dignity, diversity, and autonomy of every member.',
+    },
+    {
+      name: 'Inclusiveness',
+      description: 'We create a safe, welcoming space where members feel comfortable expressing all aspects of their identities.',
+    },
+    {
+      name: 'Transparency',
+      description: 'We act with accountability and openness in our decisions, resources, and reporting.',
+    },
+    {
+      name: 'Service',
+      description: 'We willingly give our time and talents to meet community needs and model servant leadership.',
+    },
+    {
+      name: 'Cultural Preservation',
+      description: 'We promote and protect Ethiopian history, language, and heritage for future generations.',
+    },
+  ],
+  aboutTitle: 'The principles that guide our work.',
   values: [
     'We promote inclusiveness, so members feel safe, respected, and comfortable in expressing all aspects of their identities.',
     'We celebrate the diversity and autonomy of individual members.',
@@ -107,47 +153,151 @@ const defaultContent = {
       publishedAt: '2026-01-01T00:00:00.000Z',
     },
   ],
+  membershipIntro:
+    'Membership is open to community members who meet the eligibility requirements below and agree to abide by the ECSF bylaws. Joining gives you a voice in the community and a way to support its work.',
+  membershipEligibility: [
+    'Be Ethiopian, Ethiopian-American, or married to an Ethiopian',
+    'Be 18 years of age or older',
+    'Complete the membership registration',
+    'Agree to abide by the ECSF bylaws',
+  ],
   memberships: [
     {
-      name: 'Regular Membership',
-      price: '$60 / year',
-      note: 'For individual members ages 18 and up.',
+      name: 'Annual Membership',
+      price: '$50 / year',
+      note: 'Standard annual membership dues for eligible community members.',
     },
     {
-      name: 'Retired Membership',
-      price: '$30 / year',
-      note: 'For retired community members who want to stay connected.',
+      name: 'Retired Members',
+      price: '$25 / year',
+      note: '50% discount on annual dues for retired community members.',
     },
     {
-      name: 'Family Supporter',
-      price: 'Custom gift',
-      note: 'For families and supporters contributing at any level.',
+      name: 'Elderly & Low-Income',
+      price: 'Reduced rate',
+      note: 'A reduced-rate option is available for elderly and low-income members through a board-approved process.',
     },
   ],
+  memberRights: [
+    'Voting rights',
+    'Attend meetings',
+    'Participate in programs and committees',
+  ],
+  memberResponsibilities: [
+    'Follow the ECSF bylaws',
+    'Pay membership dues',
+    'Support community activities',
+  ],
+  membershipNote:
+    'Membership dues are billed annually. ECSF does not currently offer monthly membership payments.',
+  governanceTitle: 'How ECSF is governed.',
+  governanceIntro:
+    'ECSF is an organization led by a structure of accountable bodies and committees rather than any single individual. This structure keeps decisions transparent, shared, and aligned with the bylaws.',
+  governanceBodies: [
+    {
+      name: 'General Assembly',
+      description: 'All members in good standing. The General Assembly is the highest decision-making body and elects the Board of Directors.',
+    },
+    {
+      name: 'Board of Directors',
+      description: 'Elected by the General Assembly to provide oversight, set direction, and ensure ECSF acts in line with its mission and bylaws.',
+    },
+    {
+      name: 'Executive Committee',
+      description: 'A subset of the Board responsible for day-to-day governance decisions between full Board meetings.',
+    },
+    {
+      name: 'Advisory Board',
+      description: 'Experienced advisors who provide guidance, expertise, and community perspective to the Board.',
+    },
+    {
+      name: 'Audit Committee',
+      description: 'Provides independent review of finances and ensures transparency and accountability.',
+    },
+    {
+      name: 'Executive Director',
+      description: 'Leads the implementation of programs and operations under the direction of the Board.',
+    },
+    {
+      name: 'Committees',
+      description: 'Working groups that carry out ECSF programs and initiatives in specific focus areas.',
+    },
+  ],
+  governanceChart: [
+    ['General Assembly'],
+    ['Board of Directors'],
+    ['Advisory Board', 'Executive Committee', 'Audit Committee'],
+    ['Executive Director'],
+    ['Committees'],
+  ],
+  governanceDisclaimer:
+    'Detailed leadership names and contact information are shared publicly only after the Board approves wider disclosure.',
   programs: [
     {
-      title: 'Education & Youth',
-      description:
-        'Amharic lessons, STEM labs, mentoring, college counseling, job fairs, and intergenerational cultural learning.',
+      title: 'Youth Education & Mentorship',
+      description: 'Tutoring, STEM learning, college counseling, and mentorship connecting students with Ethiopian professionals.',
+    },
+    {
+      title: 'Elder Support',
+      description: 'Engagement, social connection, and assistance that help our elders stay active and supported.',
     },
     {
       title: 'Health & Wellness',
-      description:
-        'Community health fairs, bilingual public panels, mental health support, and culturally aware wellness resources.',
+      description: 'Community health fairs, bilingual public panels, and culturally aware wellness and mental health resources.',
     },
     {
-      title: 'Legal & Social Support',
-      description:
-        'Pro bono legal referrals, elderly engagement, resource navigation, and support for immigrant families.',
+      title: 'Cultural Affairs',
+      description: 'Programs that promote and preserve Ethiopian history, language, music, food, and heritage.',
     },
+    {
+      title: 'Membership Outreach',
+      description: 'Growing and engaging our membership and keeping the community connected and informed.',
+    },
+    {
+      title: 'Community Development',
+      description: 'Initiatives that strengthen the community and build long-term capacity and partnerships.',
+    },
+    {
+      title: 'Newcomer Assistance',
+      description: 'Welcoming and supporting newly arrived community members as they settle and find resources.',
+    },
+    {
+      title: 'Employment Support',
+      description: 'Job readiness, career resources, and connections that support members seeking work.',
+    },
+    {
+      title: 'Technology & Website Development',
+      description: 'Building and maintaining the digital tools, website, and systems that serve the community.',
+    },
+    {
+      title: 'Public Relations',
+      description: 'Communications and outreach that represent the community and share ECSF news responsibly.',
+    },
+    {
+      title: 'Fundraising',
+      description: 'Raising the resources needed to sustain community programs and operations.',
+    },
+  ],
+  privacyTitle: 'Privacy & Data Protection',
+  privacyIntro:
+    'ECSF is committed to protecting member information in line with our bylaws.',
+  privacyPoints: [
+    'We protect member information and handle it with care.',
+    'We collect only the limited information needed to serve our members and run our programs.',
+    'We keep member information confidential and do not sell or share it without consent, except where required by law.',
   ],
   donationTitle: 'Your support keeps culture, service, and care moving forward.',
   donationText:
-    'This local form is ready to connect to Stripe, PayPal, or a custom payment backend.',
+    'Donations support our community programs and day-to-day operations. ECSF is committed to financial transparency, and all funds are managed under Board oversight.',
+  donationDisclaimer:
+    'Please note: ECSF does not currently represent that donations are tax-deductible. Tax and legal status information will be shared only once it has been confirmed.',
+  contactTitle: 'Get involved with ECSF.',
+  contactIntro:
+    'Reach the right place using the forms below. To protect privacy, we direct inquiries through official ECSF channels rather than personal phone numbers or personal emails.',
   siteUrl: 'https://ethiopiancommunitysf.org',
   contactEmail: 'info@ethiopiancommunitysf.org',
-  contactPhone: '(415) 555-0123',
-  contactLocation: 'San Francisco, California',
+  contactPhone: '',
+  contactLocation: 'San Francisco & the Bay Area, California',
   heroMediaId: '',
   media: [],
 }
@@ -172,6 +322,7 @@ function publishPost(post) {
     publishedTitle: post.title,
     publishedDate: post.date,
     publishedCategory: post.category,
+    publishedNoticeType: post.noticeType || 'community',
     publishedExcerpt: post.excerpt,
     publishedMediaId: post.mediaId,
     publishedAt: new Date().toISOString(),
@@ -198,6 +349,7 @@ function getPublishedPost(post) {
     title: post.publishedTitle,
     date: post.publishedDate,
     category: post.publishedCategory,
+    noticeType: post.publishedNoticeType || 'community',
     excerpt: post.publishedExcerpt,
     mediaId: post.publishedMediaId,
     publishedAt: post.publishedAt,
@@ -213,6 +365,7 @@ function hasUnpublishedPostChanges(post) {
     post.title !== post.publishedTitle ||
     post.date !== post.publishedDate ||
     post.category !== post.publishedCategory ||
+    (post.noticeType || 'community') !== (post.publishedNoticeType || 'community') ||
     post.excerpt !== post.publishedExcerpt ||
     post.mediaId !== post.publishedMediaId
   )
@@ -311,10 +464,12 @@ function SiteHeader({ content, isAdmin, onLogout }) {
       </a>
 
       <nav className="main-nav" aria-label="Main navigation">
-        <a href="#about">About Us</a>
-        <a href="#events">Current Events</a>
+        <a href="#about">About</a>
+        <a href="#programs">Programs</a>
         <a href="#membership">Membership</a>
-        <a href="#programs">What We Do</a>
+        <a href="#governance">Governance</a>
+        <a href="#events">News</a>
+        <a href="#contact">Contact</a>
         <a href="#donate">Donate</a>
         {isAdmin && (
           <>
@@ -335,6 +490,8 @@ function PublicSite({ content, historyParagraphs, onThemeChange }) {
   const featuredMedia =
     content.media.find((mediaItem) => mediaItem.id === content.heroMediaId) ?? content.media[0]
   const publishedPosts = content.posts.map(getPublishedPost).filter(Boolean)
+  const officialPosts = publishedPosts.filter((post) => post.noticeType === 'official')
+  const communityPosts = publishedPosts.filter((post) => post.noticeType !== 'official')
 
   return (
     <>
@@ -358,6 +515,13 @@ function PublicSite({ content, historyParagraphs, onThemeChange }) {
             <FeaturedMedia media={featuredMedia} />
             <h2>{content.heroCardTitle}</h2>
             <p>{content.heroCardText}</p>
+            {content.heroFocusPoints?.length > 0 && (
+              <ul className="focus-chips">
+                {content.heroFocusPoints.map((point) => (
+                  <li key={point}>{point}</li>
+                ))}
+              </ul>
+            )}
           </div>
         </section>
 
@@ -385,12 +549,32 @@ function PublicSite({ content, historyParagraphs, onThemeChange }) {
           </section>
         )}
 
-        <section className="mission-band" aria-labelledby="mission-heading">
+        <section className="mission-band" id="mission" aria-labelledby="mission-heading">
           <div>
-            <p className="section-kicker">Mission Statement</p>
-            <h2 id="mission-heading">{content.missionTitle}</h2>
+            <p className="section-kicker">{content.missionTitle}</p>
+            <h2 id="mission-heading">{content.missionText}</h2>
           </div>
-          <p>{content.missionText}</p>
+          <div className="vision-block">
+            <p className="section-kicker">{content.visionTitle}</p>
+            <p>{content.visionText}</p>
+          </div>
+        </section>
+
+        <section className="section values-section" id="values">
+          <div className="section-heading centered">
+            <p className="section-kicker">{content.coreValuesTitle}</p>
+            <h2>The values at the heart of ECSF.</h2>
+          </div>
+
+          <div className="core-values-grid">
+            {content.coreValues?.map((value) => (
+              <article className="core-value-card" key={value.name}>
+                <span aria-hidden="true" />
+                <h3>{value.name}</h3>
+                <p>{value.description}</p>
+              </article>
+            ))}
+          </div>
         </section>
 
         <section className="section" id="about">
@@ -422,52 +606,6 @@ function PublicSite({ content, historyParagraphs, onThemeChange }) {
           </div>
         </section>
 
-        <section className="section split-section" id="events">
-          <div className="section-heading">
-            <p className="section-kicker">Current Events & Posts</p>
-            <h2>{content.eventsIntro}</h2>
-            <p>Publish announcements, event cards, and community updates from the admin dashboard.</p>
-          </div>
-
-          <div className="event-list">
-            {publishedPosts.map((post) => (
-              <article className="event-card" key={`${post.title}-${post.date}-${post.publishedAt}`}>
-                <PostMedia media={content.media.find((mediaItem) => mediaItem.id === post.mediaId)} />
-                <span>{post.category}</span>
-                <h3>{post.title}</h3>
-                <p className="event-date">{post.date}</p>
-                <p>{post.excerpt}</p>
-              </article>
-            ))}
-            {publishedPosts.length === 0 && (
-              <article className="event-card">
-                <h3>No published posts yet</h3>
-                <p>New posts appear here after an admin clicks Publish.</p>
-              </article>
-            )}
-          </div>
-        </section>
-
-        <section className="section" id="membership">
-          <div className="section-heading centered">
-            <p className="section-kicker">Membership</p>
-            <h2>Choose a membership level and help sustain the work.</h2>
-          </div>
-
-          <div className="membership-grid">
-            {content.memberships.map((membership) => (
-              <article className="membership-card" key={membership.name}>
-                <h3>{membership.name}</h3>
-                <p className="price">{membership.price}</p>
-                <p>{membership.note}</p>
-                <a className="button secondary" href="#donate">
-                  Start Membership
-                </a>
-              </article>
-            ))}
-          </div>
-        </section>
-
         <section className="section programs-section" id="programs">
           <div className="section-heading">
             <p className="section-kicker">What We Do</p>
@@ -484,14 +622,241 @@ function PublicSite({ content, historyParagraphs, onThemeChange }) {
           </div>
         </section>
 
+        <section className="section" id="membership">
+          <div className="section-heading centered">
+            <p className="section-kicker">Membership</p>
+            <h2>Join and help sustain the community.</h2>
+            <p>{content.membershipIntro}</p>
+          </div>
+
+          <div className="membership-detail-grid">
+            <article className="detail-card">
+              <h3>Eligibility Requirements</h3>
+              <ul className="check-list">
+                {content.membershipEligibility?.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+            <article className="detail-card">
+              <h3>Member Rights</h3>
+              <ul className="check-list">
+                {content.memberRights?.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+            <article className="detail-card">
+              <h3>Member Responsibilities</h3>
+              <ul className="check-list">
+                {content.memberResponsibilities?.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          </div>
+
+          <h3 className="subsection-title">Membership Fees</h3>
+          <div className="membership-grid">
+            {content.memberships.map((membership) => (
+              <article className="membership-card" key={membership.name}>
+                <h3>{membership.name}</h3>
+                <p className="price">{membership.price}</p>
+                <p>{membership.note}</p>
+                <a className="button secondary" href="#contact">
+                  Membership Inquiry
+                </a>
+              </article>
+            ))}
+          </div>
+          {content.membershipNote && <p className="fine-print">{content.membershipNote}</p>}
+        </section>
+
+        <section className="section governance-section" id="governance">
+          <div className="section-heading">
+            <p className="section-kicker">Governance</p>
+            <h2>{content.governanceTitle}</h2>
+            <p>{content.governanceIntro}</p>
+          </div>
+
+          <div className="org-chart" aria-label="ECSF organizational chart">
+            {content.governanceChart?.map((level, levelIndex) => (
+              <div className="org-level" key={`level-${levelIndex}`}>
+                {level.map((node) => (
+                  <span className="org-node" key={node}>
+                    {node}
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+
+          <div className="governance-grid">
+            {content.governanceBodies?.map((body) => (
+              <article className="governance-card" key={body.name}>
+                <h3>{body.name}</h3>
+                <p>{body.description}</p>
+              </article>
+            ))}
+          </div>
+
+          {content.governanceDisclaimer && (
+            <p className="fine-print">{content.governanceDisclaimer}</p>
+          )}
+        </section>
+
+        <section className="section split-section" id="events">
+          <div className="section-heading">
+            <p className="section-kicker">News & Announcements</p>
+            <h2>{content.eventsIntro}</h2>
+            <p>Official notices and community updates, published from the admin dashboard.</p>
+          </div>
+
+          <div className="announcement-columns">
+            <div className="announcement-column">
+              <h3 className="announcement-heading official">Official ECSF Notices</h3>
+              <div className="event-list">
+                {officialPosts.map((post) => (
+                  <article className="event-card" key={`${post.title}-${post.date}-${post.publishedAt}`}>
+                    <PostMedia media={content.media.find((mediaItem) => mediaItem.id === post.mediaId)} />
+                    <span>{post.category || 'Official Notice'}</span>
+                    <h3>{post.title}</h3>
+                    <p className="event-date">{post.date}</p>
+                    <p>{post.excerpt}</p>
+                  </article>
+                ))}
+                {officialPosts.length === 0 && (
+                  <article className="event-card">
+                    <h3>No official notices yet</h3>
+                    <p>Board-approved notices appear here once published.</p>
+                  </article>
+                )}
+              </div>
+            </div>
+
+            <div className="announcement-column">
+              <h3 className="announcement-heading community">Community Updates</h3>
+              <div className="event-list">
+                {communityPosts.map((post) => (
+                  <article className="event-card" key={`${post.title}-${post.date}-${post.publishedAt}`}>
+                    <PostMedia media={content.media.find((mediaItem) => mediaItem.id === post.mediaId)} />
+                    <span>{post.category || 'Community'}</span>
+                    <h3>{post.title}</h3>
+                    <p className="event-date">{post.date}</p>
+                    <p>{post.excerpt}</p>
+                  </article>
+                ))}
+                {communityPosts.length === 0 && (
+                  <article className="event-card">
+                    <h3>No community updates yet</h3>
+                    <p>New updates appear here after an admin clicks Publish.</p>
+                  </article>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section privacy-section" id="privacy">
+          <div className="section-heading">
+            <p className="section-kicker">Privacy</p>
+            <h2>{content.privacyTitle}</h2>
+            <p>{content.privacyIntro}</p>
+          </div>
+          <ul className="check-list privacy-list">
+            {content.privacyPoints?.map((point) => (
+              <li key={point}>{point}</li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="section contact-section" id="contact">
+          <div className="section-heading centered">
+            <p className="section-kicker">Get Involved</p>
+            <h2>{content.contactTitle}</h2>
+            <p>{content.contactIntro}</p>
+          </div>
+
+          <div className="contact-grid">
+            <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
+              <h3>Volunteer Interest Form</h3>
+              <label>
+                Full name
+                <input type="text" name="volName" placeholder="Your name" />
+              </label>
+              <label>
+                Email
+                <input type="email" name="volEmail" placeholder="you@example.com" />
+              </label>
+              <label>
+                How would you like to help?
+                <textarea name="volInterest" placeholder="Programs, events, skills you can offer..." />
+              </label>
+              <button className="button primary" type="submit">
+                Submit Interest
+              </button>
+            </form>
+
+            <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
+              <h3>Membership Inquiry Form</h3>
+              <label>
+                Full name
+                <input type="text" name="memName" placeholder="Your name" />
+              </label>
+              <label>
+                Email
+                <input type="email" name="memEmail" placeholder="you@example.com" />
+              </label>
+              <label>
+                Your question
+                <textarea name="memQuestion" placeholder="Ask about eligibility, dues, or how to join..." />
+              </label>
+              <button className="button primary" type="submit">
+                Send Inquiry
+              </button>
+            </form>
+
+            <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
+              <h3>Leadership Contact Portal</h3>
+              <label>
+                Full name
+                <input type="text" name="leadName" placeholder="Your name" />
+              </label>
+              <label>
+                Email
+                <input type="email" name="leadEmail" placeholder="you@example.com" />
+              </label>
+              <label>
+                Topic for leadership
+                <select name="leadTopic" defaultValue="general">
+                  <option value="general">General</option>
+                  <option value="governance">Governance</option>
+                  <option value="programs">Programs</option>
+                  <option value="partnership">Partnership</option>
+                </select>
+              </label>
+              <label>
+                Message
+                <textarea name="leadMessage" placeholder="Your message to ECSF leadership..." />
+              </label>
+              <button className="button primary" type="submit">
+                Contact Leadership
+              </button>
+            </form>
+          </div>
+        </section>
+
         <section className="donation-section" id="donate">
           <div>
             <p className="section-kicker">Donate to ECSF</p>
             <h2>{content.donationTitle}</h2>
             <p>{content.donationText}</p>
+            {content.donationDisclaimer && (
+              <p className="donation-disclaimer">{content.donationDisclaimer}</p>
+            )}
           </div>
 
-          <form className="donation-form">
+          <form className="donation-form" onSubmit={(event) => event.preventDefault()}>
             <label>
               First name
               <input type="text" name="firstName" placeholder="First name" />
@@ -506,14 +871,14 @@ function PublicSite({ content, historyParagraphs, onThemeChange }) {
             </label>
             <label>
               Amount
-              <select name="amount" defaultValue="60">
-                <option value="30">$30</option>
-                <option value="60">$60</option>
-                <option value="120">$120</option>
+              <select name="amount" defaultValue="50">
+                <option value="25">$25</option>
+                <option value="50">$50</option>
+                <option value="100">$100</option>
                 <option value="custom">Custom amount</option>
               </select>
             </label>
-            <button className="button primary" type="button">
+            <button className="button primary" type="submit">
               Continue to Payment
             </button>
           </form>
@@ -523,13 +888,15 @@ function PublicSite({ content, historyParagraphs, onThemeChange }) {
       <footer className="site-footer">
         <div>
           <h2>{content.siteName} {content.region}</h2>
-          <p>Serving families, elders, youth, and volunteers across the Greater San Francisco area.</p>
+          <p>Serving Ethiopians and Ethiopian-Americans across San Francisco and the greater Bay Area.</p>
         </div>
         <address>
           <strong>Contact Us</strong>
           <a href={content.siteUrl}>{content.siteUrl.replace(/^https?:\/\//, '')}</a>
-          <a href={`mailto:${content.contactEmail}`}>{content.contactEmail}</a>
-          <a href={`tel:${content.contactPhone}`}>{content.contactPhone}</a>
+          {content.contactEmail && (
+            <a href={`mailto:${content.contactEmail}`}>{content.contactEmail}</a>
+          )}
+          {content.contactPhone && <a href={`tel:${content.contactPhone}`}>{content.contactPhone}</a>}
           <span>{content.contactLocation}</span>
         </address>
       </footer>
@@ -644,6 +1011,15 @@ function AdminDashboard({ content, isAdmin, onLogin, onLogout, onReset, onUpdate
     }))
   }
 
+  function updateStringListItem(listName, index, value) {
+    setContent((current) => ({
+      ...current,
+      [listName]: (current[listName] || []).map((item, itemIndex) =>
+        itemIndex === index ? value : item,
+      ),
+    }))
+  }
+
   function updateMedia(index, field, value) {
     setContent((current) => ({
       ...current,
@@ -702,7 +1078,16 @@ function AdminDashboard({ content, isAdmin, onLogin, onLogout, onReset, onUpdate
   }
 
   function publishPostAtIndex(index) {
-    updatePost(index, publishPost)
+    updatePost(index, (post) => {
+      if (post.noticeType === 'official' && !post.boardApproved) {
+        window.alert(
+          'Official ECSF Notices must be marked board-approved before publishing. Please confirm board approval first.',
+        )
+        return post
+      }
+
+      return publishPost(post)
+    })
   }
 
   function removeMedia(index) {
@@ -842,9 +1227,24 @@ function AdminDashboard({ content, isAdmin, onLogin, onLogout, onReset, onUpdate
             Highlight card text
             <textarea value={content.heroCardText} onChange={(event) => onUpdate('heroCardText', event.target.value)} />
           </label>
+          <p className="field-help">Homepage focus points (chips)</p>
+          {(content.heroFocusPoints || []).map((point, index) => (
+            <div className="inline-editor" key={`focus-${index}`}>
+              <input
+                value={point}
+                onChange={(event) => updateStringListItem('heroFocusPoints', index, event.target.value)}
+              />
+              <button type="button" onClick={() => removeListItem('heroFocusPoints', index)}>
+                Remove
+              </button>
+            </div>
+          ))}
+          <button className="button secondary" type="button" onClick={() => addListItem('heroFocusPoints', 'New focus')}>
+            Add Focus Point
+          </button>
         </AdminPanel>
 
-        <AdminPanel title="Mission & About">
+        <AdminPanel title="Mission, Vision & Values">
           <label>
             Mission title
             <input value={content.missionTitle} onChange={(event) => onUpdate('missionTitle', event.target.value)} />
@@ -853,6 +1253,44 @@ function AdminDashboard({ content, isAdmin, onLogin, onLogout, onReset, onUpdate
             Mission text
             <textarea value={content.missionText} onChange={(event) => onUpdate('missionText', event.target.value)} />
           </label>
+          <label>
+            Vision title
+            <input value={content.visionTitle} onChange={(event) => onUpdate('visionTitle', event.target.value)} />
+          </label>
+          <label>
+            Vision text
+            <textarea value={content.visionText} onChange={(event) => onUpdate('visionText', event.target.value)} />
+          </label>
+          <label>
+            Core values title
+            <input value={content.coreValuesTitle} onChange={(event) => onUpdate('coreValuesTitle', event.target.value)} />
+          </label>
+          <p className="field-help">Core values</p>
+          {(content.coreValues || []).map((value, index) => (
+            <div className="collection-editor" key={`core-value-${index}`}>
+              <input
+                aria-label="Value name"
+                placeholder="Value name"
+                value={value.name}
+                onChange={(event) => updateListItem('coreValues', index, 'name', event.target.value)}
+              />
+              <textarea
+                aria-label="Value description"
+                placeholder="Value description"
+                value={value.description}
+                onChange={(event) => updateListItem('coreValues', index, 'description', event.target.value)}
+              />
+              <button type="button" onClick={() => removeListItem('coreValues', index)}>
+                Remove Value
+              </button>
+            </div>
+          ))}
+          <button className="button secondary" type="button" onClick={() => addListItem('coreValues', { ...emptyEntry })}>
+            Add Core Value
+          </button>
+        </AdminPanel>
+
+        <AdminPanel title="About & History">
           <label>
             About title
             <input value={content.aboutTitle} onChange={(event) => onUpdate('aboutTitle', event.target.value)} />
@@ -923,6 +1361,24 @@ function AdminDashboard({ content, isAdmin, onLogin, onLogout, onReset, onUpdate
                 value={post.category}
                 onChange={(event) => updateListItem('posts', index, 'category', event.target.value)}
               />
+              <label>
+                Announcement type
+                <select
+                  value={post.noticeType || 'community'}
+                  onChange={(event) => updateListItem('posts', index, 'noticeType', event.target.value)}
+                >
+                  <option value="community">Community Update</option>
+                  <option value="official">Official ECSF Notice</option>
+                </select>
+              </label>
+              <label className="checkbox-field">
+                <input
+                  type="checkbox"
+                  checked={Boolean(post.boardApproved)}
+                  onChange={(event) => updateListItem('posts', index, 'boardApproved', event.target.checked)}
+                />
+                Board-approved (required before publishing major announcements)
+              </label>
               <textarea
                 aria-label="Post excerpt"
                 placeholder="Short description"
@@ -999,6 +1455,159 @@ function AdminDashboard({ content, isAdmin, onLogin, onLogout, onReset, onUpdate
           </button>
         </AdminPanel>
 
+        <AdminPanel title="Membership">
+          <label>
+            Membership intro
+            <textarea value={content.membershipIntro} onChange={(event) => onUpdate('membershipIntro', event.target.value)} />
+          </label>
+          <p className="field-help">Eligibility requirements</p>
+          {(content.membershipEligibility || []).map((item, index) => (
+            <div className="inline-editor" key={`eligibility-${index}`}>
+              <input
+                value={item}
+                onChange={(event) => updateStringListItem('membershipEligibility', index, event.target.value)}
+              />
+              <button type="button" onClick={() => removeListItem('membershipEligibility', index)}>
+                Remove
+              </button>
+            </div>
+          ))}
+          <button className="button secondary" type="button" onClick={() => addListItem('membershipEligibility', 'New requirement')}>
+            Add Requirement
+          </button>
+
+          <p className="field-help">Membership fees</p>
+          {content.memberships.map((membership, index) => (
+            <div className="collection-editor" key={`fee-${index}`}>
+              <input
+                aria-label="Fee name"
+                placeholder="Name"
+                value={membership.name}
+                onChange={(event) => updateListItem('memberships', index, 'name', event.target.value)}
+              />
+              <input
+                aria-label="Fee price"
+                placeholder="Price"
+                value={membership.price}
+                onChange={(event) => updateListItem('memberships', index, 'price', event.target.value)}
+              />
+              <textarea
+                aria-label="Fee note"
+                placeholder="Note"
+                value={membership.note}
+                onChange={(event) => updateListItem('memberships', index, 'note', event.target.value)}
+              />
+              <button type="button" onClick={() => removeListItem('memberships', index)}>
+                Remove Fee
+              </button>
+            </div>
+          ))}
+          <button className="button secondary" type="button" onClick={() => addListItem('memberships', { name: '', price: '', note: '' })}>
+            Add Fee
+          </button>
+
+          <p className="field-help">Member rights</p>
+          {(content.memberRights || []).map((item, index) => (
+            <div className="inline-editor" key={`right-${index}`}>
+              <input
+                value={item}
+                onChange={(event) => updateStringListItem('memberRights', index, event.target.value)}
+              />
+              <button type="button" onClick={() => removeListItem('memberRights', index)}>
+                Remove
+              </button>
+            </div>
+          ))}
+          <button className="button secondary" type="button" onClick={() => addListItem('memberRights', 'New right')}>
+            Add Right
+          </button>
+
+          <p className="field-help">Member responsibilities</p>
+          {(content.memberResponsibilities || []).map((item, index) => (
+            <div className="inline-editor" key={`responsibility-${index}`}>
+              <input
+                value={item}
+                onChange={(event) => updateStringListItem('memberResponsibilities', index, event.target.value)}
+              />
+              <button type="button" onClick={() => removeListItem('memberResponsibilities', index)}>
+                Remove
+              </button>
+            </div>
+          ))}
+          <button className="button secondary" type="button" onClick={() => addListItem('memberResponsibilities', 'New responsibility')}>
+            Add Responsibility
+          </button>
+
+          <label>
+            Membership note (fine print)
+            <textarea value={content.membershipNote} onChange={(event) => onUpdate('membershipNote', event.target.value)} />
+          </label>
+        </AdminPanel>
+
+        <AdminPanel title="Governance">
+          <label>
+            Governance title
+            <input value={content.governanceTitle} onChange={(event) => onUpdate('governanceTitle', event.target.value)} />
+          </label>
+          <label>
+            Governance intro
+            <textarea value={content.governanceIntro} onChange={(event) => onUpdate('governanceIntro', event.target.value)} />
+          </label>
+          <p className="field-help">Governance bodies</p>
+          {(content.governanceBodies || []).map((body, index) => (
+            <div className="collection-editor" key={`body-${index}`}>
+              <input
+                aria-label="Body name"
+                placeholder="Name"
+                value={body.name}
+                onChange={(event) => updateListItem('governanceBodies', index, 'name', event.target.value)}
+              />
+              <textarea
+                aria-label="Body description"
+                placeholder="Description"
+                value={body.description}
+                onChange={(event) => updateListItem('governanceBodies', index, 'description', event.target.value)}
+              />
+              <button type="button" onClick={() => removeListItem('governanceBodies', index)}>
+                Remove Body
+              </button>
+            </div>
+          ))}
+          <button className="button secondary" type="button" onClick={() => addListItem('governanceBodies', { ...emptyEntry })}>
+            Add Body
+          </button>
+          <label>
+            Leadership disclosure note
+            <textarea value={content.governanceDisclaimer} onChange={(event) => onUpdate('governanceDisclaimer', event.target.value)} />
+          </label>
+        </AdminPanel>
+
+        <AdminPanel title="Privacy & Data Protection">
+          <label>
+            Privacy title
+            <input value={content.privacyTitle} onChange={(event) => onUpdate('privacyTitle', event.target.value)} />
+          </label>
+          <label>
+            Privacy intro
+            <textarea value={content.privacyIntro} onChange={(event) => onUpdate('privacyIntro', event.target.value)} />
+          </label>
+          <p className="field-help">Privacy points</p>
+          {(content.privacyPoints || []).map((item, index) => (
+            <div className="inline-editor" key={`privacy-${index}`}>
+              <textarea
+                value={item}
+                onChange={(event) => updateStringListItem('privacyPoints', index, event.target.value)}
+              />
+              <button type="button" onClick={() => removeListItem('privacyPoints', index)}>
+                Remove
+              </button>
+            </div>
+          ))}
+          <button className="button secondary" type="button" onClick={() => addListItem('privacyPoints', 'New privacy point')}>
+            Add Privacy Point
+          </button>
+        </AdminPanel>
+
         <AdminPanel title="Pictures & Videos">
           <label>
             Upload media
@@ -1051,11 +1660,7 @@ function AdminDashboard({ content, isAdmin, onLogin, onLogout, onReset, onUpdate
           ))}
         </AdminPanel>
 
-        <AdminPanel title="Donation & Contact">
-          <label>
-            Website URL
-            <input value={content.siteUrl} onChange={(event) => onUpdate('siteUrl', event.target.value)} />
-          </label>
+        <AdminPanel title="Donation">
           <label>
             Donation title
             <textarea value={content.donationTitle} onChange={(event) => onUpdate('donationTitle', event.target.value)} />
@@ -1065,11 +1670,30 @@ function AdminDashboard({ content, isAdmin, onLogin, onLogout, onReset, onUpdate
             <textarea value={content.donationText} onChange={(event) => onUpdate('donationText', event.target.value)} />
           </label>
           <label>
-            Email
+            Donation disclaimer (tax/legal)
+            <textarea value={content.donationDisclaimer} onChange={(event) => onUpdate('donationDisclaimer', event.target.value)} />
+          </label>
+        </AdminPanel>
+
+        <AdminPanel title="Contact & Get Involved">
+          <label>
+            Contact title
+            <input value={content.contactTitle} onChange={(event) => onUpdate('contactTitle', event.target.value)} />
+          </label>
+          <label>
+            Contact intro
+            <textarea value={content.contactIntro} onChange={(event) => onUpdate('contactIntro', event.target.value)} />
+          </label>
+          <label>
+            Website URL
+            <input value={content.siteUrl} onChange={(event) => onUpdate('siteUrl', event.target.value)} />
+          </label>
+          <label>
+            Contact email (official channel)
             <input value={content.contactEmail} onChange={(event) => onUpdate('contactEmail', event.target.value)} />
           </label>
           <label>
-            Phone
+            Phone (leave blank to hide)
             <input value={content.contactPhone} onChange={(event) => onUpdate('contactPhone', event.target.value)} />
           </label>
           <label>
