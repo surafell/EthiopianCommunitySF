@@ -168,7 +168,6 @@ export default function Layout(context) {
           <Link to="/donate">Donate</Link>
           <Link to="/contact">Contact</Link>
           <Link to="/privacy">Privacy</Link>
-          <Link to="/admin">Admin</Link>
         </nav>
 
         <address>
