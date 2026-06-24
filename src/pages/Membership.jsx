@@ -20,7 +20,7 @@ export default function Membership() {
             </ul>
           </article>
           <article className="detail-card">
-            <h3>Member Rights</h3>
+            <h3>Member Benefits</h3>
             <ul className="check-list">
               {content.memberRights?.map((item) => (
                 <li key={item}>{item}</li>

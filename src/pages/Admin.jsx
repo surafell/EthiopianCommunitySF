@@ -779,9 +779,9 @@ export default function Admin() {
             Add Fee
           </button>
 
-          <p className="field-help">Member rights</p>
+          <p className="field-help">Member benefits</p>
           {(content.memberRights || []).map((item, index) => (
-            <div className="inline-editor" key={`right-${index}`}>
+            <div className="inline-editor" key={`benefit-${index}`}>
               <input
                 value={item}
                 onChange={(event) => updateStringListItem('memberRights', index, event.target.value)}
@@ -791,8 +791,8 @@ export default function Admin() {
               </button>
             </div>
           ))}
-          <button className="button secondary" type="button" onClick={() => addListItem('memberRights', 'New right')}>
-            Add Right
+          <button className="button secondary" type="button" onClick={() => addListItem('memberRights', 'New benefit')}>
+            Add Benefit
           </button>
 
           <p className="field-help">Member responsibilities</p>

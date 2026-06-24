@@ -1,4 +1,4 @@
-export const STORAGE_KEY = 'ecsf-site-content-v2'
+export const STORAGE_KEY = 'ecsf-site-content-v3'
 export const SESSION_KEY = 'ecsf-admin-session-v1'
 
 export function slugify(value) {
@@ -224,7 +224,14 @@ export const defaultContent = {
       inactive: true,
     },
   ],
-  memberRights: ['Voting rights', 'Attend meetings', 'Participate in programs and committees'],
+  memberRights: [
+    'Participation in community programs and events',
+    'Service and volunteer opportunities',
+    'Committee participation',
+    'Community engagement and networking',
+    'Ability to submit recommendations and feedback to ECSF leadership',
+    'Access to community resources and services',
+  ],
   memberResponsibilities: ['Follow the ECSF bylaws', 'Pay membership dues', 'Support community activities'],
   membershipNote:
     'Membership dues are billed annually. A monthly payment option is planned for the future and is not active yet.',
@@ -232,22 +239,21 @@ export const defaultContent = {
   // Governance
   governanceTitle: 'How ECSF is governed.',
   governanceIntro:
-    'ECSF is led by a structure of accountable bodies and committees rather than any single individual. This structure keeps decisions transparent, shared, and aligned with the bylaws.',
+    'As recently amended in our bylaws, ECSF will not operate under the traditional General Assembly model during its first phase. For the first two years, the Board of Directors serves as the highest governing and decision-making authority of the organization. The General Assembly serves as an advisory and community engagement body that provides recommendations and feedback but does not have voting authority over governance matters.',
   governanceBodies: [
-    { name: 'General Assembly', description: 'All members in good standing. The highest decision-making body, which elects the Board of Directors.' },
-    { name: 'Board of Directors', description: 'Elected by the General Assembly to provide oversight, set direction, and ensure ECSF acts in line with its mission and bylaws.' },
-    { name: 'Executive Committee', description: 'A subset of the Board responsible for day-to-day governance decisions between full Board meetings.' },
-    { name: 'Advisory Board', description: 'Experienced advisors who provide guidance, expertise, and community perspective to the Board.' },
+    { name: 'Board of Directors', description: 'The highest governing and decision-making authority of ECSF. For the organization\u2019s first two years, the Board holds final authority over governance matters and sets the strategic direction in line with our mission and bylaws.' },
+    { name: 'Advisory Board', description: 'Experienced advisors who provide guidance, expertise, and community perspective to the Board of Directors.' },
+    { name: 'Executive Director', description: 'Leads the day-to-day implementation of programs and operations under the direction of the Board, and oversees the organization\u2019s committees.' },
+    { name: 'Executive Committee', description: 'Handles day-to-day governance decisions between Board meetings, under the direction of the Executive Director and Board.' },
     { name: 'Audit Committee', description: 'Provides independent review of finances and ensures transparency and accountability.' },
-    { name: 'Executive Director', description: 'Leads the implementation of programs and operations under the direction of the Board.' },
-    { name: 'Committees', description: 'Working groups that carry out ECSF programs and initiatives in specific focus areas.' },
+    { name: 'Standing Committees', description: 'Working groups that carry out ECSF programs and initiatives in specific focus areas.' },
+    { name: 'General Assembly', description: 'An advisory and community engagement body made up of members. It provides recommendations and feedback to ECSF leadership but does not hold voting authority over governance matters during the first phase of the organization.' },
   ],
   governanceChart: [
-    ['General Assembly'],
     ['Board of Directors'],
-    ['Advisory Board', 'Executive Committee', 'Audit Committee'],
-    ['Executive Director'],
-    ['Committees'],
+    ['Advisory Board', 'Executive Director'],
+    ['Executive Committee', 'Audit Committee', 'Standing Committees'],
+    ['General Assembly (Advisory & Community Input)'],
   ],
   governanceDisclaimer:
     'Detailed leadership names and contact information are shared publicly only after the Board approves wider disclosure.',
