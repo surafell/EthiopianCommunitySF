@@ -2255,18 +2255,26 @@
   .site-header {
     position: sticky;
     top: 0;
+    flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    gap: 0;
+    padding-right: 4.5rem;
   }
 
   .main-nav {
     display: none;
+    order: 3;
     width: 100%;
+    max-height: calc(100vh - 5rem);
+    overflow-y: auto;
     flex-direction: column;
     align-items: stretch;
     gap: 0.25rem;
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(106, 90, 249, 0.12);
   }
 
   .main-nav.open {
@@ -2295,16 +2303,37 @@
 
   .nav-menu {
     position: static;
-    display: flex;
+    min-width: 0;
+    width: 100%;
     box-shadow: none;
     border: 0;
-    background: rgba(15, 163, 160, 0.06);
-    margin: 0 0 0.4rem 0.5rem;
+    border-left: 2px solid rgba(106, 90, 249, 0.25);
+    border-radius: 0;
+    background: transparent;
+    padding: 0.15rem 0 0.35rem;
+    margin: 0 0 0.35rem 0.9rem;
+  }
+
+  .nav-menu::before {
+    display: none;
+  }
+
+  .nav-menu a {
+    padding: 0.6rem 0.6rem;
   }
 
   .nav-caret {
-    font-size: 0.9rem;
-    padding: 0.3rem 0.5rem;
+    font-size: 1rem;
+    padding: 0.5rem 0.6rem;
+  }
+
+  .nav-caret span {
+    display: inline-block;
+    transition: transform 180ms ease;
+  }
+
+  .nav-group.open .nav-caret span {
+    transform: rotate(180deg);
   }
 
   .subpage-grid,

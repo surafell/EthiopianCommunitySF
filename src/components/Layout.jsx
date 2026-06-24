@@ -9,15 +9,21 @@ export function useSite() {
 function NavDropdown({ label, to, items, onNavigate }) {
   const [open, setOpen] = useState(false)
   const closeTimer = useRef(null)
+  const hoverable = useRef(false)
 
-  useEffect(() => () => clearTimeout(closeTimer.current), [])
+  useEffect(() => {
+    hoverable.current = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    return () => clearTimeout(closeTimer.current)
+  }, [])
 
   function openMenu() {
+    if (!hoverable.current) return
     clearTimeout(closeTimer.current)
     setOpen(true)
   }
 
   function scheduleClose() {
+    if (!hoverable.current) return
     clearTimeout(closeTimer.current)
     closeTimer.current = setTimeout(() => setOpen(false), 280)
   }
