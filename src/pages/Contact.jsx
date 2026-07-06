@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useSite } from '../components/Layout'
 import { PageHero } from '../components/Page'
 
@@ -10,24 +11,16 @@ export default function Contact() {
 
       <section className="section">
         <div className="contact-grid">
-          <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
+          <div className="contact-form contact-form-promo">
             <h3>Volunteer Interest Form</h3>
-            <label>
-              Full name
-              <input type="text" name="volName" placeholder="Your name" />
-            </label>
-            <label>
-              Email
-              <input type="email" name="volEmail" placeholder="you@example.com" />
-            </label>
-            <label>
-              How would you like to help?
-              <textarea name="volInterest" placeholder="Programs, events, skills you can offer..." />
-            </label>
-            <button className="button primary" type="submit">
-              Submit Interest
-            </button>
-          </form>
+            <p>
+              Complete our bilingual volunteer interest & service request form to share your skills,
+              availability, and areas where you would like to serve.
+            </p>
+            <Link className="button primary" to="/volunteer">
+              Open Volunteer Form
+            </Link>
+          </div>
 
           <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
             <h3>Membership Inquiry Form</h3>

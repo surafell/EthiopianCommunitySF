@@ -480,6 +480,44 @@ export default function Admin() {
             Bylaws (Amharic)
             <textarea value={content.bylawsAmharic} onChange={(event) => onUpdate('bylawsAmharic', event.target.value)} />
           </label>
+          {(content.bylawsDocuments || []).map((document, index) => (
+            <div className="collection-editor" key={`${document.url}-${index}`}>
+              <p className="field-help">Bylaws document {index + 1}</p>
+              <label>
+                Title
+                <input
+                  value={document.title}
+                  onChange={(event) => {
+                    const next = [...(content.bylawsDocuments || [])]
+                    next[index] = { ...next[index], title: event.target.value }
+                    onUpdate('bylawsDocuments', next)
+                  }}
+                />
+              </label>
+              <label>
+                PDF URL
+                <input
+                  value={document.url}
+                  onChange={(event) => {
+                    const next = [...(content.bylawsDocuments || [])]
+                    next[index] = { ...next[index], url: event.target.value }
+                    onUpdate('bylawsDocuments', next)
+                  }}
+                />
+              </label>
+              <label>
+                File name
+                <input
+                  value={document.fileName}
+                  onChange={(event) => {
+                    const next = [...(content.bylawsDocuments || [])]
+                    next[index] = { ...next[index], fileName: event.target.value }
+                    onUpdate('bylawsDocuments', next)
+                  }}
+                />
+              </label>
+            </div>
+          ))}
           <label>
             Financials intro
             <textarea value={content.financialsIntro} onChange={(event) => onUpdate('financialsIntro', event.target.value)} />

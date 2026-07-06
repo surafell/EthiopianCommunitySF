@@ -79,6 +79,7 @@ export default function Layout(context) {
     { to: '/about/history', label: 'Our History' },
     { to: '/about/boards', label: 'Meet Our Board' },
     { to: '/about/volunteers', label: 'Volunteers' },
+    { to: '/volunteer', label: 'Volunteer Form' },
     { to: '/about/annual-reports', label: 'Annual Reports' },
     { to: '/about/bylaws', label: 'Bylaws' },
     { to: '/about/financials', label: 'Financials' },

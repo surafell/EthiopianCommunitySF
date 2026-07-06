@@ -1,4 +1,4 @@
-export const STORAGE_KEY = 'ecsf-site-content-v3'
+export const STORAGE_KEY = 'ecsf-site-content-v5'
 export const SESSION_KEY = 'ecsf-admin-session-v1'
 
 export function slugify(value) {
@@ -52,6 +52,7 @@ export const emptyBoardMember = {
   name: '',
   position: '',
   mediaId: '',
+  anonymous: false,
 }
 
 export const emptyReport = {
@@ -126,15 +127,39 @@ export const defaultContent = {
   historyTagline: 'Serve • Embrace • Welcome — One Community, Many Cultures, One Purpose',
 
   boardIntro: 'Our Board of Directors provides oversight, sets direction, and ensures ECSF acts in line with its mission and bylaws.',
-  boardMembers: [],
+  boardMembers: [
+    { name: 'Estifanos Gebereselassie', position: 'Board of Directors', mediaId: '', anonymous: true },
+    { name: 'Tesfaye Worku', position: 'Board of Directors', mediaId: '', anonymous: true },
+    { name: 'Yohannes Gebreselasie', position: 'Board of Directors', mediaId: '', anonymous: true },
+    { name: 'Gashaw Gebru', position: 'Board of Directors', mediaId: '', anonymous: true },
+    { name: 'Rahel Abebe', position: 'Board of Directors', mediaId: '', anonymous: true },
+  ],
   volunteersIntro:
-    'Volunteers are the heart of ECSF. As our volunteer team grows, members will be featured here. Interested in joining? Reach out through our Contact page.',
+    'Volunteers are the heart of ECSF. As our volunteer team grows, members will be featured here. Interested in joining? Complete the Volunteer Interest & Service Request Form to share how you would like to serve.',
   volunteers: [],
   annualReportsIntro: 'Our annual reports will be published here to keep the community informed about our work, impact, and stewardship.',
   annualReports: [],
-  bylawsIntro: 'ECSF bylaws govern how our organization operates. They will be made available here in both English and Amharic.',
-  bylawsEnglish: 'The English version of the ECSF bylaws will be added here soon.',
-  bylawsAmharic: 'የኢ.ት.ማ.ሰ. ህገ ደንብ የአማርኛ ቅጂ በቅርቡ እዚህ ይጨመራል።',
+  bylawsIntro: 'The bylaws in both English and Amharic are attached below.',
+  bylawsEnglish: 'Download the English bylaws PDF below.',
+  bylawsAmharic: 'የአማርኛ ህገ-ደንብን PDF ከዚህ በታች ያውርዱ።',
+  bylawsDocuments: [
+    {
+      title: 'ECSF Bylaws (English — 2026)',
+      description: 'Official bylaws of the Ethiopian Community in San Francisco and the Bay Area.',
+      url: '/documents/ECSF_English_Bylaws_2026.pdf',
+      fileName: 'ECSF_English_Bylaws_2026.pdf',
+      language: 'English',
+    },
+    {
+      title: 'ECSF Bylaws (Amharic — Revised)',
+      titleAm: 'የECSF ህገ-ደንብ (አማርኛ — የማሻሻያ)',
+      description: 'Official revised bylaws of the Ethiopian Community in San Francisco and the Bay Area.',
+      descriptionAm: 'የኢትዮጵያውያን ማህበረሰብ በሳንፍራንሲስኮ እና በቤይ ኤሪያ (ECSF) የማሻሻያ ህገ-ደንብ።',
+      url: '/documents/ECSF_Amharic_Bylaw_Revised.pdf',
+      fileName: 'ECSF_Amharic_Bylaw_Revised.pdf',
+      language: 'Amharic',
+    },
+  ],
   financialsIntro:
     'ECSF is committed to financial transparency. Financial summaries and statements will be shared here as they become available, under Board oversight.',
   financialsText: 'Financial information is being prepared and will be published here soon.',

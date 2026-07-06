@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useSite } from '../components/Layout'
 import { PageHero, Breadcrumbs, ComingSoon } from '../components/Page'
 import { PostMedia, findMedia } from '../components/Media'
@@ -13,6 +13,29 @@ const sectionMeta = {
   bylaws: { title: 'Bylaws', kicker: 'About Us' },
   financials: { title: 'Financials', kicker: 'About Us' },
   'our-stories': { title: 'Our Stories', kicker: 'About Us' },
+}
+
+function BoardPhoto({ member, media }) {
+  if (media?.src) {
+    return <img src={media.src} alt={member.name} />
+  }
+
+  if (member.anonymous) {
+    return (
+      <span className="board-anonymous" aria-hidden="true">
+        <svg viewBox="0 0 24 24" role="presentation">
+          <circle cx="12" cy="8" r="4" fill="currentColor" />
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="currentColor" />
+        </svg>
+      </span>
+    )
+  }
+
+  return (
+    <span className="board-initials" aria-hidden="true">
+      {member.name?.charAt(0) || '?'}
+    </span>
+  )
 }
 
 export default function AboutSection() {
@@ -59,14 +82,8 @@ export default function AboutSection() {
               <div className="board-grid">
                 {content.boardMembers.map((member, index) => (
                   <article className="board-card" key={`${member.name}-${index}`}>
-                    <div className="board-photo">
-                      {findMedia(content.media, member.mediaId)?.src ? (
-                        <img src={findMedia(content.media, member.mediaId).src} alt={member.name} />
-                      ) : (
-                        <span className="board-initials" aria-hidden="true">
-                          {member.name?.charAt(0) || '?'}
-                        </span>
-                      )}
+                    <div className={`board-photo ${member.anonymous ? 'anonymous' : ''}`}>
+                      <BoardPhoto member={member} media={findMedia(content.media, member.mediaId)} />
                     </div>
                     <h3>{member.name}</h3>
                     <p className="board-position">{member.position}</p>
@@ -85,18 +102,20 @@ export default function AboutSection() {
         {section === 'volunteers' && (
           <>
             <p className="lead">{content.volunteersIntro}</p>
+            <div className="volunteer-cta">
+              <Link className="button primary" to="/volunteer">
+                Fill Out Volunteer Form
+              </Link>
+              <p className="volunteer-cta-note">
+                Complete the bilingual volunteer interest & service request form online.
+              </p>
+            </div>
             {content.volunteers?.length > 0 ? (
               <div className="board-grid">
                 {content.volunteers.map((member, index) => (
                   <article className="board-card" key={`${member.name}-${index}`}>
-                    <div className="board-photo">
-                      {findMedia(content.media, member.mediaId)?.src ? (
-                        <img src={findMedia(content.media, member.mediaId).src} alt={member.name} />
-                      ) : (
-                        <span className="board-initials" aria-hidden="true">
-                          {member.name?.charAt(0) || '?'}
-                        </span>
-                      )}
+                    <div className={`board-photo ${member.anonymous ? 'anonymous' : ''}`}>
+                      <BoardPhoto member={member} media={findMedia(content.media, member.mediaId)} />
                     </div>
                     <h3>{member.name}</h3>
                     <p className="board-position">{member.position}</p>
@@ -141,16 +160,32 @@ export default function AboutSection() {
         {section === 'bylaws' && (
           <>
             <p className="lead">{content.bylawsIntro}</p>
-            <div className="bylaws-grid">
-              <article className="bylaws-card">
-                <h3>English</h3>
-                <p className="prose-inline">{content.bylawsEnglish}</p>
-              </article>
-              <article className="bylaws-card">
-                <h3>አማርኛ (Amharic)</h3>
-                <p className="prose-inline">{content.bylawsAmharic}</p>
-              </article>
-            </div>
+
+            {content.bylawsDocuments?.length > 0 && (
+              <div className="document-list">
+                {content.bylawsDocuments.map((document) => (
+                  <article className="document-card" key={document.url}>
+                    <div>
+                      <span className="document-badge">{document.language}</span>
+                      <h3>{document.title}</h3>
+                      {document.titleAm && <p className="document-title-am">{document.titleAm}</p>}
+                      <p>{document.description}</p>
+                      {document.descriptionAm && <p className="document-desc-am">{document.descriptionAm}</p>}
+                      <p className="document-meta">PDF · {document.fileName}</p>
+                    </div>
+                    <a
+                      className="button primary"
+                      href={document.url}
+                      download={document.fileName}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Download PDF
+                    </a>
+                  </article>
+                ))}
+              </div>
+            )}
           </>
         )}
 

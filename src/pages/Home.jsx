@@ -30,8 +30,11 @@ export default function Home() {
             <Link className="button primary" to="/membership">
               Become a Member
             </Link>
-            <Link className="button secondary" to="/about">
-              Read Our Mission
+            <Link className="button secondary" to="/volunteer">
+              Apply to Volunteer
+            </Link>
+            <Link className="button secondary" to="/donate">
+              Donate
             </Link>
           </div>
         </div>
@@ -113,10 +116,15 @@ export default function Home() {
 
           <div className="aside-card">
             <h3>Support ECSF</h3>
-            <p>Your membership and donations keep our programs running.</p>
-            <Link className="button primary" to="/donate">
-              Donate
-            </Link>
+            <p>Your membership, volunteering, and donations keep our programs running.</p>
+            <div className="aside-actions">
+              <Link className="button primary" to="/volunteer">
+                Apply to Volunteer
+              </Link>
+              <Link className="button secondary" to="/donate">
+                Donate
+              </Link>
+            </div>
           </div>
         </aside>
       </section>

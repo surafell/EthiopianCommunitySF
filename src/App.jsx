@@ -15,6 +15,7 @@ import Contact from './pages/Contact'
 import Governance from './pages/Governance'
 import Privacy from './pages/Privacy'
 import Admin from './pages/Admin'
+import VolunteerForm from './pages/VolunteerForm'
 import NotFound from './pages/NotFound'
 import { STORAGE_KEY, SESSION_KEY, defaultContent, loadContent } from './content'
 
@@ -72,6 +73,7 @@ function App() {
           <Route path="membership" element={<Membership />} />
           <Route path="donate" element={<Donation />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="volunteer" element={<VolunteerForm />} />
           <Route path="governance" element={<Governance />} />
           <Route path="privacy" element={<Privacy />} />
           <Route path="admin" element={<Admin />} />
