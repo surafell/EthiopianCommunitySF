@@ -970,6 +970,13 @@ export default function Admin() {
 
         <AdminPanel title="Donation">
           <label>
+            Square checkout URL
+            <input
+              value={content.donationCheckoutUrl || ''}
+              onChange={(event) => onUpdate('donationCheckoutUrl', event.target.value)}
+            />
+          </label>
+          <label>
             Donation title
             <textarea value={content.donationTitle} onChange={(event) => onUpdate('donationTitle', event.target.value)} />
           </label>

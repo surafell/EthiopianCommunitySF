@@ -136,9 +136,15 @@ export default function Layout(context) {
           <NavLink to="/contact" onClick={() => setMenuOpen(false)}>
             Contact
           </NavLink>
-          <NavLink className="nav-cta" to="/donate" onClick={() => setMenuOpen(false)}>
+          <a
+            className="nav-cta"
+            href={content.donationCheckoutUrl}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => setMenuOpen(false)}
+          >
             Donate
-          </NavLink>
+          </a>
           {isAdmin && (
             <>
               <NavLink className="admin-nav-link" to="/admin" onClick={() => setMenuOpen(false)}>
@@ -172,7 +178,9 @@ export default function Layout(context) {
           <Link to="/what-we-do">What We Do</Link>
           <Link to="/events">Events</Link>
           <Link to="/membership">Membership</Link>
-          <Link to="/donate">Donate</Link>
+          <a href={content.donationCheckoutUrl} target="_blank" rel="noreferrer">
+            Donate
+          </a>
           <Link to="/contact">Contact</Link>
           <Link to="/privacy">Privacy</Link>
         </nav>

@@ -342,6 +342,8 @@ export const defaultContent = {
   ],
 
   // Donation
+  donationCheckoutUrl:
+    'https://checkout.square.site/merchant/ML3ZEYXPP70Y3/checkout/A6L4EYYYAYORBP3OKMKRUJP5',
   donationTitle: 'Your support keeps culture, service, and care moving forward.',
   donationText:
     'Donations support our community programs and day-to-day operations. ECSF is committed to financial transparency, and all funds are managed under Board oversight.',

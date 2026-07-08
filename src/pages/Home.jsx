@@ -33,9 +33,9 @@ export default function Home() {
             <Link className="button secondary" to="/volunteer">
               Apply to Volunteer
             </Link>
-            <Link className="button secondary" to="/donate">
+            <a className="button secondary" href={content.donationCheckoutUrl} target="_blank" rel="noreferrer">
               Donate
-            </Link>
+            </a>
           </div>
         </div>
 
@@ -121,9 +121,9 @@ export default function Home() {
               <Link className="button primary" to="/volunteer">
                 Apply to Volunteer
               </Link>
-              <Link className="button secondary" to="/donate">
+              <a className="button secondary" href={content.donationCheckoutUrl} target="_blank" rel="noreferrer">
                 Donate
-              </Link>
+              </a>
             </div>
           </div>
         </aside>
