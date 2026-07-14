@@ -1,4 +1,4 @@
-export const STORAGE_KEY = 'ecsf-site-content-v5'
+export const STORAGE_KEY = 'ecsf-site-content-v6'
 export const SESSION_KEY = 'ecsf-admin-session-v1'
 
 export function slugify(value) {
@@ -227,18 +227,24 @@ export const defaultContent = {
     {
       name: 'Regular Membership',
       price: '$50 / year',
+      amount: 50,
+      checkoutUrl: '',
       note: 'Standard annual membership for community members 18 years and older.',
       inactive: false,
     },
     {
       name: 'Senior Membership',
       price: '$25 / year',
+      amount: 25,
+      checkoutUrl: '',
       note: 'Reduced annual dues for senior community members.',
       inactive: false,
     },
     {
       name: 'Unemployment / Low-Income',
       price: 'Reduced or $0',
+      amount: 0,
+      checkoutUrl: '',
       note: 'For members experiencing unemployment, a reduced fee or no-fee membership is available with an eligibility check.',
       inactive: false,
     },

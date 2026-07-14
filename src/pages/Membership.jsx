@@ -29,10 +29,13 @@ export default function Membership() {
     const form = event.currentTarget
     const data = formDataToObject(new FormData(form))
 
+    const tier = content.memberships.find((membership) => membership.name === data.membershipTier)
+
     const paymentState = {
       fromMembership: true,
       memberName: data.fullName,
       membershipTier: data.membershipTier,
+      membershipAmount: tier?.amount ?? null,
     }
 
     // Send registration email in the background so payment is not delayed.

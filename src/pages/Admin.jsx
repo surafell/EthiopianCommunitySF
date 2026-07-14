@@ -791,6 +791,32 @@ export default function Admin() {
                 value={membership.price}
                 onChange={(event) => updateListItem('memberships', index, 'price', event.target.value)}
               />
+              <label>
+                Amount (USD)
+                <input
+                  type="number"
+                  min="0"
+                  step="1"
+                  placeholder="50"
+                  value={membership.amount ?? ''}
+                  onChange={(event) =>
+                    updateListItem(
+                      'memberships',
+                      index,
+                      'amount',
+                      event.target.value === '' ? '' : Number(event.target.value),
+                    )
+                  }
+                />
+              </label>
+              <label>
+                Square checkout URL (optional)
+                <input
+                  placeholder="Tier-specific Square link for fixed amount"
+                  value={membership.checkoutUrl || ''}
+                  onChange={(event) => updateListItem('memberships', index, 'checkoutUrl', event.target.value)}
+                />
+              </label>
               <textarea
                 placeholder="Note"
                 value={membership.note}
@@ -812,7 +838,9 @@ export default function Admin() {
           <button
             className="button secondary"
             type="button"
-            onClick={() => addListItem('memberships', { name: '', price: '', note: '', inactive: false })}
+            onClick={() =>
+              addListItem('memberships', { name: '', price: '', amount: '', checkoutUrl: '', note: '', inactive: false })
+            }
           >
             Add Fee
           </button>
