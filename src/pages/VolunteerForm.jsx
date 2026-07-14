@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { FormFeedback } from '../components/FormFeedback'
 import { useSite } from '../components/Layout'
 import { Breadcrumbs, PageHero } from '../components/Page'
+import { formDataToObject, submitFormToEmail } from '../utils/formSubmit'
 
 const volunteerAreas = [
   { id: 'events', en: 'Events & Community Gatherings', am: 'ዝግጅቶች እና የማህበረሰብ መሰብሰቢያዎች' },
@@ -53,10 +55,16 @@ function CheckboxOption({ id, name, value, checked, onChange, en, am }) {
 export default function VolunteerForm() {
   const { content } = useSite()
   const [submitted, setSubmitted] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState('idle')
+  const [submitError, setSubmitError] = useState('')
   const [areas, setAreas] = useState([])
   const [availability, setAvailability] = useState([])
   const [showOtherArea, setShowOtherArea] = useState(false)
   const [confirmed, setConfirmed] = useState(false)
+
+  function labelList(ids, options) {
+    return ids.map((id) => options.find((option) => option.id === id)?.en || id).join(', ')
+  }
 
   function toggleValue(list, setList, value) {
     setList((current) => (current.includes(value) ? current.filter((item) => item !== value) : [...current, value]))
@@ -70,10 +78,44 @@ export default function VolunteerForm() {
     }
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
-    setSubmitted(true)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    const form = event.currentTarget
+    const data = formDataToObject(new FormData(form))
+
+    setSubmitStatus('submitting')
+    setSubmitError('')
+
+    try {
+      await submitFormToEmail({
+        to: content.contactEmail,
+        subject: 'ECSF Volunteer Application',
+        replyTo: data.email,
+        fields: {
+          'Form Type': 'Volunteer Application',
+          Date: data.date,
+          'Full Name': data.fullName,
+          Email: data.email,
+          Phone: data.phone,
+          'City / Area': data.city,
+          'ECSF Member': data.member,
+          'Volunteer Areas': labelList(areas, volunteerAreas) || 'None selected',
+          'Other Area': data.otherArea || '',
+          Availability: labelList(availability, availabilityOptions) || 'None selected',
+          Skills: data.skills || '',
+          Motivation: data.motivation || '',
+          Comments: data.comments || '',
+          Signature: data.signature,
+          'Signature Date': data.signatureDate,
+        },
+      })
+      setSubmitted(true)
+      setSubmitStatus('success')
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } catch (error) {
+      setSubmitStatus('error')
+      setSubmitError(error.message)
+    }
   }
 
   return (
@@ -119,16 +161,11 @@ export default function VolunteerForm() {
           <div className="volunteer-success">
             <h2>Thank you for your interest!</h2>
             <p>
-              Your volunteer application has been received in this browser demo. To submit officially, please
-              email a completed form to{' '}
-              <a href={`mailto:${content.contactEmail || 'info@ethiopiancommunitysf.org'}`}>
-                {content.contactEmail || 'info@ethiopiancommunitysf.org'}
-              </a>{' '}
-              or contact ECSF leadership.
+              Your volunteer application has been sent to{' '}
+              <a href={`mailto:${content.contactEmail}`}>{content.contactEmail}</a>. ECSF leadership or the
+              volunteer coordinator will follow up with you soon.
             </p>
-            <p>
-              ለECSF አመራር ወይም ለተመደበው የበጎ ፈቃደኞች አስተባባሪ የተሞላውን ቅጽ በኢሜይል ያስረክቡ።
-            </p>
+            <p>የበጎ ፈቃድ ማመልከቻዎ ተልኳል። ECSF አመራር በቅርቡ ይገናኝዎታል።</p>
             <Link className="button secondary" to="/about/volunteers">
               Back to Volunteers
             </Link>
@@ -294,9 +331,14 @@ export default function VolunteerForm() {
             </fieldset>
 
             <div className="volunteer-form-actions">
-              <button className="button primary" type="submit" disabled={!confirmed}>
-                Submit Volunteer Application
+              <button
+                className="button primary"
+                type="submit"
+                disabled={!confirmed || submitStatus === 'submitting'}
+              >
+                {submitStatus === 'submitting' ? 'Sending…' : 'Submit Volunteer Application'}
               </button>
+              <FormFeedback status={submitStatus} error={submitError} />
               <p className="volunteer-submit-note">
                 Please submit this form to ECSF leadership or the designated volunteer coordinator.
                 <span>እባክዎ ይህን ቅጽ ለECSF አመራር ወይም ለተመደበው የበጎ ፈቃደኞች አስተባባሪ ያስረክቡ።</span>

@@ -1,9 +1,43 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { FormFeedback } from '../components/FormFeedback'
 import { useSite } from '../components/Layout'
 import { PageHero } from '../components/Page'
+import { formDataToObject, submitFormToEmail } from '../utils/formSubmit'
 
 export default function Contact() {
   const { content } = useSite()
+  const [leadershipStatus, setLeadershipStatus] = useState('idle')
+  const [leadershipError, setLeadershipError] = useState('')
+
+  async function handleLeadershipSubmit(event) {
+    event.preventDefault()
+    const form = event.currentTarget
+    const data = formDataToObject(new FormData(form))
+
+    setLeadershipStatus('submitting')
+    setLeadershipError('')
+
+    try {
+      await submitFormToEmail({
+        to: content.contactEmail,
+        subject: 'ECSF Leadership Contact',
+        replyTo: data.leadEmail,
+        fields: {
+          'Form Type': 'Leadership Contact',
+          'Full Name': data.leadName,
+          Email: data.leadEmail,
+          Topic: data.leadTopic,
+          Message: data.leadMessage,
+        },
+      })
+      form.reset()
+      setLeadershipStatus('success')
+    } catch (error) {
+      setLeadershipStatus('error')
+      setLeadershipError(error.message)
+    }
+  }
 
   return (
     <>
@@ -22,34 +56,25 @@ export default function Contact() {
             </Link>
           </div>
 
-          <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
-            <h3>Membership Inquiry Form</h3>
-            <label>
-              Full name
-              <input type="text" name="memName" placeholder="Your name" />
-            </label>
-            <label>
-              Email
-              <input type="email" name="memEmail" placeholder="you@example.com" />
-            </label>
-            <label>
-              Your question
-              <textarea name="memQuestion" placeholder="Ask about eligibility, dues, or how to join..." />
-            </label>
-            <button className="button primary" type="submit">
-              Send Inquiry
-            </button>
-          </form>
+          <div className="contact-form contact-form-promo">
+            <h3>Become a Member</h3>
+            <p>
+              Register for ECSF membership and continue to payment to activate your membership.
+            </p>
+            <Link className="button primary" to="/membership#membership-form">
+              Join ECSF
+            </Link>
+          </div>
 
-          <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
+          <form className="contact-form" onSubmit={handleLeadershipSubmit}>
             <h3>Leadership Contact Portal</h3>
             <label>
               Full name
-              <input type="text" name="leadName" placeholder="Your name" />
+              <input type="text" name="leadName" placeholder="Your name" required />
             </label>
             <label>
               Email
-              <input type="email" name="leadEmail" placeholder="you@example.com" />
+              <input type="email" name="leadEmail" placeholder="you@example.com" required />
             </label>
             <label>
               Topic for leadership
@@ -62,11 +87,16 @@ export default function Contact() {
             </label>
             <label>
               Message
-              <textarea name="leadMessage" placeholder="Your message to ECSF leadership..." />
+              <textarea name="leadMessage" placeholder="Your message to ECSF leadership..." required />
             </label>
-            <button className="button primary" type="submit">
-              Contact Leadership
+            <button className="button primary" type="submit" disabled={leadershipStatus === 'submitting'}>
+              {leadershipStatus === 'submitting' ? 'Sending…' : 'Contact Leadership'}
             </button>
+            <FormFeedback
+              status={leadershipStatus}
+              error={leadershipError}
+              successMessage="Thank you. Your message has been sent to ECSF leadership."
+            />
           </form>
         </div>
       </section>

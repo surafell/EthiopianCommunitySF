@@ -1037,6 +1037,21 @@
   font-weight: 900;
 }
 
+.form-success,
+.form-status {
+  margin: 0.75rem 0 0;
+  line-height: 1.5;
+}
+
+.form-success {
+  color: var(--green-dark);
+  font-weight: 700;
+}
+
+.form-status {
+  color: var(--ink-muted);
+}
+
 .checkbox-field {
   flex-direction: row !important;
   display: flex !important;
@@ -2534,6 +2549,23 @@
 }
 
 /* Membership inactive card */
+.membership-form-section {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(106, 90, 249, 0.12);
+}
+
+.membership-form {
+  max-width: 36rem;
+}
+
+.donation-membership-note {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+
 .membership-card {
   position: relative;
 }
