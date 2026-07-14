@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { FormFeedback } from '../components/FormFeedback'
 import { useSite } from '../components/Layout'
 import { PageHero } from '../components/Page'
 import { formDataToObject, submitFormToEmail } from '../utils/formSubmit'
@@ -13,8 +12,6 @@ export default function Membership() {
   const activeMemberships = content.memberships.filter((membership) => !membership.inactive)
   const [selectedTier, setSelectedTier] = useState(activeMemberships[0]?.name || '')
   const [agreed, setAgreed] = useState(false)
-  const [status, setStatus] = useState('idle')
-  const [error, setError] = useState('')
 
   useEffect(() => {
     if (location.hash === '#membership-form') {
@@ -32,36 +29,31 @@ export default function Membership() {
     const form = event.currentTarget
     const data = formDataToObject(new FormData(form))
 
-    setStatus('submitting')
-    setError('')
-
-    try {
-      await submitFormToEmail({
-        to: content.contactEmail,
-        subject: 'ECSF Membership Registration',
-        replyTo: data.email,
-        fields: {
-          'Form Type': 'Membership Registration',
-          'Full Name': data.fullName,
-          Email: data.email,
-          Phone: data.phone,
-          'City / Area': data.city,
-          'Membership Tier': data.membershipTier,
-          Notes: data.notes || '',
-        },
-      })
-
-      navigate('/donate', {
-        state: {
-          fromMembership: true,
-          memberName: data.fullName,
-          membershipTier: data.membershipTier,
-        },
-      })
-    } catch (submitError) {
-      setStatus('error')
-      setError(submitError.message)
+    const paymentState = {
+      fromMembership: true,
+      memberName: data.fullName,
+      membershipTier: data.membershipTier,
     }
+
+    // Send registration email in the background so payment is not delayed.
+    submitFormToEmail({
+      to: content.contactEmail,
+      subject: 'ECSF Membership Registration',
+      replyTo: data.email,
+      fields: {
+        'Form Type': 'Membership Registration',
+        'Full Name': data.fullName,
+        Email: data.email,
+        Phone: data.phone,
+        'City / Area': data.city,
+        'Membership Tier': data.membershipTier,
+        Notes: data.notes || '',
+      },
+    }).catch(() => {
+      paymentState.emailPending = true
+    })
+
+    navigate('/donate', { state: paymentState })
   }
 
   return (
@@ -171,10 +163,9 @@ export default function Membership() {
               />
               <span>I agree to abide by the ECSF bylaws and membership responsibilities.</span>
             </label>
-            <button className="button primary" type="submit" disabled={!agreed || status === 'submitting'}>
-              {status === 'submitting' ? 'Submitting…' : 'Continue to Payment'}
+            <button className="button primary" type="submit" disabled={!agreed}>
+              Continue to Payment
             </button>
-            <FormFeedback status={status} error={error} />
           </form>
         </div>
       </section>

@@ -31,6 +31,12 @@ export default function Donation() {
                   may still continue below if payment is required.
                 </p>
               )}
+              {membershipState.emailPending && (
+                <p className="donation-membership-note">
+                  We could not confirm your registration email right now. You can still complete payment below,
+                  and ECSF will follow up if needed.
+                </p>
+              )}
             </>
           ) : (
             <>
