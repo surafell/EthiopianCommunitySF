@@ -914,13 +914,20 @@
 }
 
 .donate-modal-dialog {
+  display: flex;
+  flex-direction: column;
   width: min(100%, 44rem);
-  max-height: min(92vh, 52rem);
-  overflow: auto;
+  max-height: min(94vh, 56rem);
+  overflow: hidden;
   border-radius: 1.25rem;
   background: #fff;
   box-shadow: 0 28px 80px rgba(18, 16, 40, 0.28);
   padding: clamp(1rem, 3vw, 1.5rem);
+  scrollbar-width: none;
+}
+
+.donate-modal-dialog::-webkit-scrollbar {
+  display: none;
 }
 
 .donate-modal-head {
@@ -959,8 +966,30 @@
   background: rgba(106, 90, 249, 0.18);
 }
 
+.donate-modal .checkout-embed-panel {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0.9rem;
+  background: #fff;
+}
+
 .donate-modal .checkout-embed-frame {
-  min-height: 640px;
+  flex: 1 1 auto;
+  /* Widen past the panel so the iframe scrollbar is clipped out of view. */
+  width: calc(100% + 24px);
+  max-width: none;
+  min-height: min(72vh, 820px);
+  height: min(72vh, 820px);
+  border: 0;
+  overflow: hidden;
+}
+
+.donate-modal .checkout-embed-fallback {
+  flex: 0 0 auto;
 }
 
 @media (max-width: 640px) {
