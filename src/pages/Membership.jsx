@@ -1,48 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
-import { useLocation } from 'react-router-dom'
 import { useSite } from '../components/Layout'
 import { PageHero } from '../components/Page'
 import { formatMembershipAmount, resolveCheckoutUrl } from '../utils/checkout'
-import { formDataToObject, submitFormToEmail } from '../utils/formSubmit'
 
 export default function Membership() {
   const { content, openDonate } = useSite()
-  const location = useLocation()
-  const formRef = useRef(null)
-  const activeMemberships = content.memberships.filter((membership) => !membership.inactive)
-  const [selectedTier, setSelectedTier] = useState(activeMemberships[0]?.name || '')
-  const [agreed, setAgreed] = useState(false)
-  const [paymentPrompt, setPaymentPrompt] = useState(null)
 
-  useEffect(() => {
-    if (location.hash === '#membership-form') {
-      formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-  }, [location.hash])
-
-  useEffect(() => {
-    if (!paymentPrompt || typeof openDonate !== 'function') {
-      return
-    }
-
-    openDonate({
-      url: paymentPrompt.url,
-      title: paymentPrompt.title,
-      description: paymentPrompt.description,
-    })
-  }, [openDonate, paymentPrompt])
-
-  function scrollToForm(tierName) {
-    setSelectedTier(tierName)
-    formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault()
-    const form = event.currentTarget
-    const data = formDataToObject(new FormData(form))
-
-    const tier = content.memberships.find((membership) => membership.name === data.membershipTier)
+  function openMembershipCheckout(tier) {
     const formattedAmount = formatMembershipAmount(tier?.amount)
     const checkoutUrl = resolveCheckoutUrl({
       defaultUrl: content.donationCheckoutUrl,
@@ -50,29 +13,29 @@ export default function Membership() {
       amount: tier?.amount ?? null,
     })
 
-    // Send registration email in the background so payment is not delayed.
-    submitFormToEmail({
-      to: content.contactEmail,
-      subject: 'ECSF Membership Registration',
-      replyTo: data.email,
-      fields: {
-        'Form Type': 'Membership Registration',
-        'Full Name': data.fullName,
-        Email: data.email,
-        Phone: data.phone,
-        'City / Area': data.city,
-        'Membership Tier': data.membershipTier,
-        Notes: data.notes || '',
-      },
-    }).catch(() => {})
+    if (!checkoutUrl || typeof openDonate !== 'function') {
+      if (tier?.checkoutUrl) {
+        window.open(tier.checkoutUrl, '_blank', 'noopener,noreferrer')
+      }
+      return
+    }
 
-    setPaymentPrompt({
+    openDonate({
       url: checkoutUrl,
-      title: formattedAmount ? `Pay ${formattedAmount} membership` : 'Complete membership payment',
+      title: formattedAmount ? `Pay ${formattedAmount} membership` : `Join — ${tier.name}`,
       description: formattedAmount
-        ? `Thank you, ${data.fullName}. Finish your ${data.membershipTier} registration (${formattedAmount}) below.`
-        : `Thank you, ${data.fullName}. Finish your ${data.membershipTier} registration below.`,
+        ? `Secure Square checkout for ${tier.name} (${formattedAmount}).`
+        : `Secure Square checkout for ${tier.name}.`,
     })
+  }
+
+  function handleJoinNow(membership) {
+    if (membership.checkoutUrl) {
+      openMembershipCheckout(membership)
+      return
+    }
+
+    openDonate()
   }
 
   return (
@@ -120,7 +83,7 @@ export default function Membership() {
                   Coming Soon
                 </button>
               ) : (
-                <button className="button secondary" type="button" onClick={() => scrollToForm(membership.name)}>
+                <button className="button secondary" type="button" onClick={() => handleJoinNow(membership)}>
                   Join Now
                 </button>
               )}
@@ -128,65 +91,6 @@ export default function Membership() {
           ))}
         </div>
         {content.membershipNote && <p className="fine-print">{content.membershipNote}</p>}
-
-        <div className="membership-form-section" id="membership-form" ref={formRef}>
-          <div className="section-heading">
-            <p className="section-kicker">Join ECSF</p>
-            <h2>Membership Registration</h2>
-            <p>Complete the form below, then continue to payment to activate your membership.</p>
-          </div>
-
-          <form className="contact-form membership-form" onSubmit={handleSubmit}>
-            <label>
-              Full name
-              <input type="text" name="fullName" placeholder="Your name" required />
-            </label>
-            <label>
-              Email
-              <input type="email" name="email" placeholder="you@example.com" required />
-            </label>
-            <label>
-              Phone
-              <input type="tel" name="phone" placeholder="Your phone number" required />
-            </label>
-            <label>
-              City / Area
-              <input type="text" name="city" placeholder="San Francisco, East Bay, etc." required />
-            </label>
-            <label>
-              Membership tier
-              <select
-                name="membershipTier"
-                value={selectedTier}
-                onChange={(event) => setSelectedTier(event.target.value)}
-                required
-              >
-                {activeMemberships.map((membership) => (
-                  <option key={membership.name} value={membership.name}>
-                    {membership.name} — {membership.price}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Additional notes (optional)
-              <textarea name="notes" placeholder="Any details we should know about your membership..." />
-            </label>
-            <label className="checkbox-field">
-              <input
-                type="checkbox"
-                name="agreement"
-                checked={agreed}
-                onChange={(event) => setAgreed(event.target.checked)}
-                required
-              />
-              <span>I agree to abide by the ECSF bylaws and membership responsibilities.</span>
-            </label>
-            <button className="button primary" type="submit" disabled={!agreed}>
-              Continue to Payment
-            </button>
-          </form>
-        </div>
       </section>
     </>
   )

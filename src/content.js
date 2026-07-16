@@ -1,4 +1,4 @@
-export const STORAGE_KEY = 'ecsf-site-content-v10'
+export const STORAGE_KEY = 'ecsf-site-content-v12'
 export const SESSION_KEY = 'ecsf-admin-session-v1'
 
 export function slugify(value) {
@@ -246,15 +246,9 @@ export const defaultContent = {
       name: 'Unemployment / Low-Income',
       price: 'Reduced or $0',
       amount: 0,
-      checkoutUrl: '',
+      checkoutUrl: 'https://square.link/u/6Fz8yVQa',
       note: 'For members experiencing unemployment, a reduced fee or no-fee membership is available with an eligibility check.',
       inactive: false,
-    },
-    {
-      name: 'Monthly Membership',
-      price: 'Coming soon',
-      note: 'A future monthly payment option is planned. This option is not active yet.',
-      inactive: true,
     },
   ],
   memberRights: [
@@ -266,8 +260,7 @@ export const defaultContent = {
     'Access to community resources and services',
   ],
   memberResponsibilities: ['Follow the ECSF bylaws', 'Pay membership dues', 'Support community activities'],
-  membershipNote:
-    'Membership dues are billed annually. A monthly payment option is planned for the future and is not active yet.',
+  membershipNote: 'Membership dues are billed annually and processed securely through Square.',
 
   // Governance
   governanceTitle: 'How ECSF is governed.',
@@ -437,14 +430,14 @@ function mergeMemberships(savedMemberships = [], defaultMemberships = []) {
       ...savedTier,
       checkoutUrl: savedTier.checkoutUrl || defaultTier.checkoutUrl || '',
       amount: savedTier.amount ?? defaultTier.amount ?? null,
+      inactive: defaultTier.inactive,
+      name: defaultTier.name,
+      price: savedTier.price || defaultTier.price,
+      note: savedTier.note || defaultTier.note,
     }
   })
 
-  const extraSavedTiers = savedMemberships.filter(
-    (savedTier) => !defaultMemberships.some((tier) => tier.name === savedTier.name),
-  )
-
-  return [...mergedDefaults, ...extraSavedTiers]
+  return mergedDefaults
 }
 
 export function loadContent() {

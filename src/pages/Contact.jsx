@@ -58,10 +58,8 @@ export default function Contact() {
 
           <div className="contact-form contact-form-promo">
             <h3>Become a Member</h3>
-            <p>
-              Register for ECSF membership and continue to payment to activate your membership.
-            </p>
-            <Link className="button primary" to="/membership#membership-form">
+            <p>Choose a membership tier and complete secure checkout through Square.</p>
+            <Link className="button primary" to="/membership">
               Join ECSF
             </Link>
           </div>
