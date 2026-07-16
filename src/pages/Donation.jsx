@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useSite } from '../components/Layout'
 import { PageHero } from '../components/Page'
+import CheckoutEmbed from '../components/CheckoutEmbed'
 import { findMembershipTier, formatMembershipAmount, resolveCheckoutUrl } from '../utils/checkout'
 
 export default function Donation() {
@@ -98,22 +99,12 @@ export default function Donation() {
               </span>
             </div>
 
-            <div className="donation-embed-wrap">
-              <iframe
-                key={checkoutUrl}
-                className="donation-embed"
-                src={checkoutUrl}
-                title={membershipState ? 'ECSF membership payment checkout' : 'ECSF donation checkout'}
-                loading="lazy"
-              />
-            </div>
-
-            <p className="donation-embed-fallback">
-              Having trouble with the checkout?{' '}
-              <a href={checkoutUrl} target="_blank" rel="noreferrer">
-                Open payment page in a new tab
-              </a>
-            </p>
+            <CheckoutEmbed
+              key={checkoutUrl}
+              url={checkoutUrl}
+              title={membershipState ? 'ECSF membership payment checkout' : 'ECSF donation checkout'}
+              className="donation-embed-panel"
+            />
           </div>
         </div>
       </section>

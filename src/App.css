@@ -870,7 +870,8 @@
   max-width: 42rem;
 }
 
-.donation-embed-wrap {
+.donation-embed-wrap,
+.checkout-embed-panel {
   width: 100%;
   overflow: hidden;
   border: 1px solid rgba(106, 90, 249, 0.1);
@@ -878,7 +879,8 @@
   background: #f8f7ff;
 }
 
-.donation-embed {
+.donation-embed,
+.checkout-embed-frame {
   display: block;
   width: 100%;
   min-height: 720px;
@@ -886,16 +888,79 @@
   background: #ffffff;
 }
 
-.donation-embed-fallback {
+.donation-embed-fallback,
+.checkout-embed-fallback {
   margin: 0.9rem 0 0;
   text-align: center;
   font-size: 0.88rem;
   color: var(--ink-muted) !important;
 }
 
-.donation-embed-fallback a {
+.donation-embed-fallback a,
+.checkout-embed-fallback a {
   color: var(--green-dark);
   font-weight: 700;
+}
+
+.donate-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 3vw, 2rem);
+  background: rgba(18, 16, 40, 0.62);
+  backdrop-filter: blur(4px);
+}
+
+.donate-modal-dialog {
+  width: min(100%, 44rem);
+  max-height: min(92vh, 52rem);
+  overflow: auto;
+  border-radius: 1.25rem;
+  background: #fff;
+  box-shadow: 0 28px 80px rgba(18, 16, 40, 0.28);
+  padding: clamp(1rem, 3vw, 1.5rem);
+}
+
+.donate-modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.donate-modal-head h2 {
+  margin: 0.2rem 0 0.35rem;
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+}
+
+.donate-modal-head p {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.92rem;
+}
+
+.donate-modal-close {
+  flex: 0 0 auto;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(106, 90, 249, 0.1);
+  color: var(--ink);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.donate-modal-close:hover {
+  background: rgba(106, 90, 249, 0.18);
+}
+
+.donate-modal .checkout-embed-frame {
+  min-height: 640px;
 }
 
 @media (max-width: 640px) {
@@ -903,7 +968,8 @@
     max-width: none;
   }
 
-  .donation-embed {
+  .donation-embed,
+  .checkout-embed-frame {
     min-height: 640px;
   }
 
@@ -2095,6 +2161,9 @@
 }
 
 .nav-cta {
+  border: 0;
+  font: inherit;
+  cursor: pointer;
   border-radius: 999px;
   background: var(--red);
   color: #fff !important;
@@ -2779,13 +2848,24 @@
   align-content: start;
 }
 
-.footer-links a {
+.footer-links a,
+.footer-donate-link {
   color: rgba(255, 255, 255, 0.82);
   text-decoration: none;
   font-weight: 700;
 }
 
-.footer-links a:hover {
+.footer-donate-link {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.footer-links a:hover,
+.footer-donate-link:hover {
   color: #fff;
 }
 

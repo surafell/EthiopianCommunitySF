@@ -1,4 +1,4 @@
-export const STORAGE_KEY = 'ecsf-site-content-v7'
+export const STORAGE_KEY = 'ecsf-site-content-v9'
 export const SESSION_KEY = 'ecsf-admin-session-v1'
 
 export function slugify(value) {
@@ -228,7 +228,8 @@ export const defaultContent = {
       name: 'Regular Membership',
       price: '$50 / year',
       amount: 50,
-      checkoutUrl: 'https://square.link/u/gDSBhnjr',
+      checkoutUrl:
+        'https://checkout.square.site/merchant/ML3ZEYXPP70Y3/checkout/VUN5UBJHD2ZL5G44KCLCL627',
       note: 'Standard annual membership for community members 18 years and older.',
       inactive: false,
     },
@@ -236,7 +237,8 @@ export const defaultContent = {
       name: 'Senior Membership',
       price: '$25 / year',
       amount: 25,
-      checkoutUrl: 'https://square.link/u/RkuqOtMB',
+      checkoutUrl:
+        'https://checkout.square.site/merchant/ML3ZEYXPP70Y3/checkout/3PHCQFXKKTZ44WPW4W4DQXFW',
       note: 'Reduced annual dues for senior community members.',
       inactive: false,
     },
@@ -348,7 +350,8 @@ export const defaultContent = {
   ],
 
   // Donation
-  donationCheckoutUrl: 'https://square.link/u/rsWZLw7C',
+  donationCheckoutUrl:
+    'https://checkout.square.site/merchant/ML3ZEYXPP70Y3/checkout/LNHHGRVOXIG4AF233XW543X4',
   donationTitle: 'Your support keeps culture, service, and care moving forward.',
   donationText:
     'Donations support our community programs and day-to-day operations. ECSF is committed to financial transparency, and all funds are managed under Board oversight.',

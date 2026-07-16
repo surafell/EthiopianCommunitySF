@@ -11,7 +11,7 @@ const quickLinks = [
 ]
 
 export default function Home() {
-  const { content } = useSite()
+  const { content, openDonate } = useSite()
   const featuredMedia = findMedia(content.media, content.heroMediaId) ?? content.media[0]
   const publishedPosts = content.posts
     .map(getPublishedPost)
@@ -33,9 +33,9 @@ export default function Home() {
             <Link className="button secondary" to="/volunteer">
               Apply to Volunteer
             </Link>
-            <a className="button secondary" href={content.donationCheckoutUrl} target="_blank" rel="noreferrer">
+            <button className="button secondary" type="button" onClick={() => openDonate()}>
               Donate
-            </a>
+            </button>
           </div>
         </div>
 
@@ -121,9 +121,9 @@ export default function Home() {
               <Link className="button primary" to="/volunteer">
                 Apply to Volunteer
               </Link>
-              <a className="button secondary" href={content.donationCheckoutUrl} target="_blank" rel="noreferrer">
+              <button className="button secondary" type="button" onClick={() => openDonate()}>
                 Donate
-              </a>
+              </button>
             </div>
           </div>
         </aside>

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation, useOutletContext } from 'react-router-dom'
+import DonateModal from './DonateModal'
 import logo from '../assets/logo.png'
 
 export function useSite() {
@@ -69,11 +70,38 @@ export default function Layout(context) {
   const { content, isAdmin, onLogout } = context
   const location = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [donateModal, setDonateModal] = useState({
+    open: false,
+    url: content.donationCheckoutUrl,
+    title: 'Donate to ECSF',
+    description: 'Powered by Square. Complete your donation without leaving the site.',
+  })
 
   useEffect(() => {
     setMenuOpen(false)
     window.scrollTo(0, 0)
   }, [location.pathname])
+
+  function openDonate(options = {}) {
+    setDonateModal({
+      open: true,
+      url: options.url || content.donationCheckoutUrl,
+      title: options.title || 'Donate to ECSF',
+      description:
+        options.description || 'Powered by Square. Complete your donation without leaving the site.',
+    })
+    setMenuOpen(false)
+  }
+
+  function closeDonate() {
+    setDonateModal((current) => ({ ...current, open: false }))
+  }
+
+  const siteContext = {
+    ...context,
+    openDonate,
+    closeDonate,
+  }
 
   const aboutItems = [
     { to: '/about/history', label: 'Our History' },
@@ -136,15 +164,9 @@ export default function Layout(context) {
           <NavLink to="/contact" onClick={() => setMenuOpen(false)}>
             Contact
           </NavLink>
-          <a
-            className="nav-cta"
-            href={content.donationCheckoutUrl}
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => setMenuOpen(false)}
-          >
+          <button className="nav-cta" type="button" onClick={() => openDonate()}>
             Donate
-          </a>
+          </button>
           {isAdmin && (
             <>
               <NavLink className="admin-nav-link" to="/admin" onClick={() => setMenuOpen(false)}>
@@ -159,8 +181,16 @@ export default function Layout(context) {
       </header>
 
       <main id="main-content">
-        <Outlet context={context} />
+        <Outlet context={siteContext} />
       </main>
+
+      <DonateModal
+        open={donateModal.open}
+        url={donateModal.url}
+        title={donateModal.title}
+        description={donateModal.description}
+        onClose={closeDonate}
+      />
 
       <footer className="site-footer">
         <div className="footer-brand">
@@ -178,9 +208,9 @@ export default function Layout(context) {
           <Link to="/what-we-do">What We Do</Link>
           <Link to="/events">Events</Link>
           <Link to="/membership">Membership</Link>
-          <a href={content.donationCheckoutUrl} target="_blank" rel="noreferrer">
+          <button className="footer-donate-link" type="button" onClick={() => openDonate()}>
             Donate
-          </a>
+          </button>
           <Link to="/contact">Contact</Link>
           <Link to="/privacy">Privacy</Link>
         </nav>

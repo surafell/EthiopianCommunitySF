@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useSite } from '../components/Layout'
 import { PageHero } from '../components/Page'
+import { formatMembershipAmount, resolveCheckoutUrl } from '../utils/checkout'
 import { formDataToObject, submitFormToEmail } from '../utils/formSubmit'
 
 export default function Membership() {
-  const { content } = useSite()
-  const navigate = useNavigate()
+  const { content, openDonate } = useSite()
   const location = useLocation()
   const formRef = useRef(null)
   const activeMemberships = content.memberships.filter((membership) => !membership.inactive)
@@ -30,13 +30,12 @@ export default function Membership() {
     const data = formDataToObject(new FormData(form))
 
     const tier = content.memberships.find((membership) => membership.name === data.membershipTier)
-
-    const paymentState = {
-      fromMembership: true,
-      memberName: data.fullName,
-      membershipTier: data.membershipTier,
-      membershipAmount: tier?.amount ?? null,
-    }
+    const formattedAmount = formatMembershipAmount(tier?.amount)
+    const checkoutUrl = resolveCheckoutUrl({
+      defaultUrl: content.donationCheckoutUrl,
+      tier,
+      amount: tier?.amount ?? null,
+    })
 
     // Send registration email in the background so payment is not delayed.
     submitFormToEmail({
@@ -52,11 +51,15 @@ export default function Membership() {
         'Membership Tier': data.membershipTier,
         Notes: data.notes || '',
       },
-    }).catch(() => {
-      paymentState.emailPending = true
-    })
+    }).catch(() => {})
 
-    navigate('/donate', { state: paymentState })
+    openDonate({
+      url: checkoutUrl,
+      title: formattedAmount ? `Pay ${formattedAmount} membership` : 'Complete membership payment',
+      description: formattedAmount
+        ? `Thank you, ${data.fullName}. Finish your ${data.membershipTier} registration (${formattedAmount}) below.`
+        : `Thank you, ${data.fullName}. Finish your ${data.membershipTier} registration below.`,
+    })
   }
 
   return (
