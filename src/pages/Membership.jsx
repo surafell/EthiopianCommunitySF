@@ -12,6 +12,7 @@ export default function Membership() {
   const activeMemberships = content.memberships.filter((membership) => !membership.inactive)
   const [selectedTier, setSelectedTier] = useState(activeMemberships[0]?.name || '')
   const [agreed, setAgreed] = useState(false)
+  const [paymentPrompt, setPaymentPrompt] = useState(null)
 
   useEffect(() => {
     if (location.hash === '#membership-form') {
@@ -19,12 +20,24 @@ export default function Membership() {
     }
   }, [location.hash])
 
+  useEffect(() => {
+    if (!paymentPrompt || typeof openDonate !== 'function') {
+      return
+    }
+
+    openDonate({
+      url: paymentPrompt.url,
+      title: paymentPrompt.title,
+      description: paymentPrompt.description,
+    })
+  }, [openDonate, paymentPrompt])
+
   function scrollToForm(tierName) {
     setSelectedTier(tierName)
     formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  async function handleSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault()
     const form = event.currentTarget
     const data = formDataToObject(new FormData(form))
@@ -53,7 +66,7 @@ export default function Membership() {
       },
     }).catch(() => {})
 
-    openDonate({
+    setPaymentPrompt({
       url: checkoutUrl,
       title: formattedAmount ? `Pay ${formattedAmount} membership` : 'Complete membership payment',
       description: formattedAmount

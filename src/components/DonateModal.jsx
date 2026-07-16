@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import CheckoutEmbed from './CheckoutEmbed'
 
 export default function DonateModal({ open, url, title = 'Donate to ECSF', description, onClose }) {
@@ -23,11 +24,11 @@ export default function DonateModal({ open, url, title = 'Donate to ECSF', descr
     }
   }, [open, onClose])
 
-  if (!open) {
+  if (!open || !url) {
     return null
   }
 
-  return (
+  return createPortal(
     <div className="donate-modal" role="presentation" onClick={onClose}>
       <div
         className="donate-modal-dialog"
@@ -51,6 +52,7 @@ export default function DonateModal({ open, url, title = 'Donate to ECSF', descr
 
         <CheckoutEmbed key={url} url={url} title={title} />
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }

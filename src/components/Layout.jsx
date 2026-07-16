@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation, useOutletContext } from 'react-router-dom'
-import DonateModal from './DonateModal'
 import logo from '../assets/logo.png'
 
 export function useSite() {
@@ -67,41 +66,14 @@ function NavDropdown({ label, to, items, onNavigate }) {
 }
 
 export default function Layout(context) {
-  const { content, isAdmin, onLogout } = context
+  const { content, isAdmin, onLogout, openDonate } = context
   const location = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
-  const [donateModal, setDonateModal] = useState({
-    open: false,
-    url: content.donationCheckoutUrl,
-    title: 'Donate to ECSF',
-    description: 'Powered by Square. Complete your donation without leaving the site.',
-  })
 
   useEffect(() => {
     setMenuOpen(false)
     window.scrollTo(0, 0)
   }, [location.pathname])
-
-  function openDonate(options = {}) {
-    setDonateModal({
-      open: true,
-      url: options.url || content.donationCheckoutUrl,
-      title: options.title || 'Donate to ECSF',
-      description:
-        options.description || 'Powered by Square. Complete your donation without leaving the site.',
-    })
-    setMenuOpen(false)
-  }
-
-  function closeDonate() {
-    setDonateModal((current) => ({ ...current, open: false }))
-  }
-
-  const siteContext = {
-    ...context,
-    openDonate,
-    closeDonate,
-  }
 
   const aboutItems = [
     { to: '/about/history', label: 'Our History' },
@@ -164,7 +136,14 @@ export default function Layout(context) {
           <NavLink to="/contact" onClick={() => setMenuOpen(false)}>
             Contact
           </NavLink>
-          <button className="nav-cta" type="button" onClick={() => openDonate()}>
+          <button
+            className="nav-cta"
+            type="button"
+            onClick={() => {
+              openDonate()
+              setMenuOpen(false)
+            }}
+          >
             Donate
           </button>
           {isAdmin && (
@@ -181,16 +160,8 @@ export default function Layout(context) {
       </header>
 
       <main id="main-content">
-        <Outlet context={siteContext} />
+        <Outlet context={context} />
       </main>
-
-      <DonateModal
-        open={donateModal.open}
-        url={donateModal.url}
-        title={donateModal.title}
-        description={donateModal.description}
-        onClose={closeDonate}
-      />
 
       <footer className="site-footer">
         <div className="footer-brand">

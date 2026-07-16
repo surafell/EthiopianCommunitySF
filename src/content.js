@@ -1,4 +1,4 @@
-export const STORAGE_KEY = 'ecsf-site-content-v9'
+export const STORAGE_KEY = 'ecsf-site-content-v10'
 export const SESSION_KEY = 'ecsf-admin-session-v1'
 
 export function slugify(value) {
@@ -428,12 +428,34 @@ export function hasUnpublishedPostChanges(post) {
   )
 }
 
+function mergeMemberships(savedMemberships = [], defaultMemberships = []) {
+  const mergedDefaults = defaultMemberships.map((defaultTier) => {
+    const savedTier = savedMemberships.find((tier) => tier.name === defaultTier.name) || {}
+
+    return {
+      ...defaultTier,
+      ...savedTier,
+      checkoutUrl: savedTier.checkoutUrl || defaultTier.checkoutUrl || '',
+      amount: savedTier.amount ?? defaultTier.amount ?? null,
+    }
+  })
+
+  const extraSavedTiers = savedMemberships.filter(
+    (savedTier) => !defaultMemberships.some((tier) => tier.name === savedTier.name),
+  )
+
+  return [...mergedDefaults, ...extraSavedTiers]
+}
+
 export function loadContent() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY)
-    const parsedContent = saved ? { ...defaultContent, ...JSON.parse(saved) } : defaultContent
+    const parsedSaved = saved ? JSON.parse(saved) : null
+    const parsedContent = parsedSaved ? { ...defaultContent, ...parsedSaved } : defaultContent
     return {
       ...parsedContent,
+      donationCheckoutUrl: parsedContent.donationCheckoutUrl || defaultContent.donationCheckoutUrl,
+      memberships: mergeMemberships(parsedContent.memberships, defaultContent.memberships),
       posts: (parsedContent.posts || []).map(normalizePost),
       programs: (parsedContent.programs || []).map((program) => ({
         ...program,
