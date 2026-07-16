@@ -1595,17 +1595,129 @@
 
 /* Volunteer form */
 .volunteer-section {
-  max-width: 52rem;
+  max-width: min(72rem, 100%);
   margin-inline: auto;
 }
 
+@media (min-width: 1200px) {
+  .volunteer-section {
+    max-width: min(80rem, 92vw);
+  }
+}
+
 .volunteer-intro {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   padding: clamp(1.2rem, 3vw, 1.8rem);
   border: 1px solid rgba(106, 90, 249, 0.12);
   border-radius: 1.25rem;
   background: #ffffff;
   box-shadow: 0 18px 44px rgba(31, 26, 77, 0.06);
+}
+
+.volunteer-embed-card {
+  padding: clamp(1.1rem, 2.8vw, 1.6rem);
+  border: 1px solid rgba(106, 90, 249, 0.12);
+  border-radius: 1.25rem;
+  background:
+    linear-gradient(180deg, rgba(248, 247, 255, 0.95), #ffffff 38%),
+    #ffffff;
+  box-shadow: 0 22px 50px rgba(31, 26, 77, 0.08);
+}
+
+.volunteer-embed-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.volunteer-embed-head h2 {
+  margin: 0 0 0.3rem;
+  color: var(--green-dark);
+  font-family: var(--display-font);
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+}
+
+.volunteer-embed-head p {
+  margin: 0;
+  color: var(--ink-muted);
+}
+
+.volunteer-embed-wrap {
+  --volunteer-form-base-width: 640px;
+  /* Tall enough that Google Forms scrolls with the page, not inside the iframe. */
+  --volunteer-form-base-height: 2800px;
+  --volunteer-form-scale: 1;
+  /* Crops Google Forms theme accent bar at the top of the embed. */
+  --volunteer-form-top-crop: 14px;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(106, 90, 249, 0.12);
+  border-radius: 0.95rem;
+  background: #ffffff;
+  /* Reserve scaled height so the enlarged form is not clipped. */
+  height: calc(
+    (var(--volunteer-form-base-height) - var(--volunteer-form-top-crop)) * var(--volunteer-form-scale)
+  );
+}
+
+.volunteer-embed-scaler {
+  width: var(--volunteer-form-base-width);
+  margin: 0 auto;
+  transform: scale(var(--volunteer-form-scale)) translateY(calc(-1 * var(--volunteer-form-top-crop)));
+  transform-origin: top center;
+}
+
+.volunteer-embed-frame {
+  display: block;
+  width: var(--volunteer-form-base-width);
+  height: var(--volunteer-form-base-height);
+  border: 0;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.volunteer-embed-fallback {
+  margin: 0.95rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+}
+
+.volunteer-embed-fallback a {
+  color: var(--green-dark);
+  font-weight: 700;
+}
+
+@media (min-width: 900px) {
+  .volunteer-embed-wrap {
+    --volunteer-form-scale: 1.15;
+  }
+}
+
+@media (min-width: 1200px) {
+  .volunteer-embed-wrap {
+    --volunteer-form-scale: 1.25;
+  }
+}
+
+@media (max-width: 720px) {
+  .volunteer-embed-head {
+    flex-direction: column;
+  }
+
+  .volunteer-embed-wrap {
+    --volunteer-form-base-width: 100%;
+    --volunteer-form-base-height: 2600px;
+    --volunteer-form-scale: 1;
+    height: 2600px;
+  }
+
+  .volunteer-embed-scaler,
+  .volunteer-embed-frame {
+    width: 100%;
+  }
 }
 
 .volunteer-org-name,

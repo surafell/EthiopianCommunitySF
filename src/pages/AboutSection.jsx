@@ -107,7 +107,7 @@ export default function AboutSection() {
                 Fill Out Volunteer Form
               </Link>
               <p className="volunteer-cta-note">
-                Complete the bilingual volunteer interest & service request form online.
+                Complete the volunteer interest & service request form online.
               </p>
             </div>
             {content.volunteers?.length > 0 ? (
